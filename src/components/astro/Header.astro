@@ -1,0 +1,182 @@
+---
+import { getUserId } from "../../../lib/auth";
+import DarkModeToggle from "../react/DarkMode/DarkModeToggle";
+import LoginButton from "../react/login/LoginButton";
+
+const userId = getUserId(Astro.cookies);
+const isAuthenticated = Boolean(userId);
+---
+
+<header
+  class="relative
+         transition-colors duration-500
+         bg-linear-to-t
+         from-(--overlay-top)
+         to-transparent
+         text-(--color-primary)"
+>
+  <!-- Línea superior ultra fina -->
+  <div class="absolute top-0 left-0 w-full h-px bg-(--color-primary)]20"></div>
+
+  <!-- Brillo técnico -->
+  <div
+    class="absolute inset-0 pointer-events-none
+              bg-linear-to-r
+              from-transparent
+              via-(--color-secondary)/5
+              to-transparent"
+  >
+  </div>
+
+  <div
+    class="relative max-w-7xl mx-auto px-8 py-5
+           flex items-center justify-between"
+  >
+    <!-- Logo -->
+    <a
+      href="/"
+      class="relative text-lg font-semibold tracking-[0.15em]
+             uppercase
+             transition-all duration-300
+             hover:text-(--color-secondary)"
+    >
+      Metalúrgica
+      <span
+        class="absolute -bottom-1 left-0 w-0 h-px
+               bg-(--color-secondary)
+               transition-all duration-300
+               group-hover:w-full"
+      ></span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav
+      class="hidden md:flex items-center gap-10 text-sm tracking-[0.25em] uppercase"
+    >
+      {
+        ["Inicio", "Servicios", "Nosotros", "Contacto"].map((item) => (
+          <a
+            href={`/${item === "Inicio" ? "" : item.toLowerCase()}`}
+            class="relative transition-all duration-300
+                 text-(--color-primary)
+                 dark:hover:text-(--color-secondary) hover:text-(--color-secondary)"
+          >
+            {item}
+            <span
+              class="absolute -bottom-1 left-0 w-0 h-px
+                   bg-(--color-secondary)
+                   transition-all duration-300
+                   group-hover:w-full"
+            />
+          </a>
+        ))
+      }
+
+      {
+        isAuthenticated && (
+          <>
+            <a
+              href="/dashboard"
+              class="font-medium hover:text-(--color-secondary) transition"
+            >
+              Dashboard
+            </a>
+            <a
+              href="/user"
+              class="font-medium hover:text-(--color-secondary) transition"
+            >
+              Usuario
+            </a>
+          </>
+        )
+      }
+
+      <div
+        class="flex items-center gap-5 pl-6
+                  border-l border-(--card-border)"
+      >
+        <DarkModeToggle client:load />
+        <LoginButton client:load isAuthenticated={isAuthenticated} />
+      </div>
+    </nav>
+
+    <!-- Mobile button -->
+    <button
+      id="menu-btn"
+      class="md:hidden
+             text-(--color-primary)
+             hover:text-(--color-secondary)
+             transition-all duration-300"
+      aria-label="Abrir menú"
+    >
+      ☰
+    </button>
+  </div>
+
+  <!-- Línea inferior de precisión -->
+  <div class="absolute bottom-0 left-0 w-full h-px bg-(--card-border)"></div>
+
+  <!-- Mobile menu -->
+  <nav
+    id="mobile-menu"
+    class="md:hidden hidden px-8 py-6 space-y-4
+           bg-linear-to-b
+           from-(--overlay-top)
+           to-transparent
+           transition-colors duration-500"
+  >
+    <a
+      href="/"
+      class="block tracking-wide hover:text-(--color-secondary) transition"
+      >Inicio</a
+    >
+    <a
+      href="/servicios"
+      class="block tracking-wide hover:text-(--color-secondary) transition"
+      >Servicios</a
+    >
+    <a
+      href="/nosotros"
+      class="block tracking-wide hover:text-(--color-secondary) transition"
+      >Nosotros</a
+    >
+    <a
+      href="/contacto"
+      class="block tracking-wide hover:text-(--color-secondary) transition"
+      >Contacto</a
+    >
+
+    {
+      isAuthenticated && (
+        <>
+          <a
+            href="/dashboard"
+            class="block font-medium hover:text-(--color-secondary) transition"
+          >
+            Dashboard
+          </a>
+          <a
+            href="/user"
+            class="block font-medium hover:text-(--color-secondary) transition"
+          >
+            Usuario
+          </a>
+        </>
+      )
+    }
+
+    <div class="flex items-center gap-5 pt-5 border-t border-(--card-border)">
+      <DarkModeToggle client:load />
+      <LoginButton client:load isAuthenticated={isAuthenticated} />
+    </div>
+  </nav>
+</header>
+
+<script>
+  const btn = document.getElementById("menu-btn");
+  const menu = document.getElementById("mobile-menu");
+
+  btn?.addEventListener("click", () => {
+    menu?.classList.toggle("hidden");
+  });
+</script>

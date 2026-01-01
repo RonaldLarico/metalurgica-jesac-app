@@ -1,0 +1,51 @@
+---
+import "filepond/dist/filepond.min.css";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+import ThemeScript from "../components/ThemeScript.astro";
+import Header from "../components/astro/Header.astro";
+import Footer from "../components/astro/Footer.astro";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Metalúrgica - Jesac" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <ThemeScript />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{title}</title>
+
+    <meta
+      name="description"
+      content="Servicios metalúrgicos industriales, fundición, tratamientos térmicos y soluciones técnicas."
+    />
+
+    <!-- Tailwind -->
+    <link rel="stylesheet" href="/src/styles/global.css" />
+  </head>
+
+  <body
+    class="min-h-screen flex flex-col
+    bg-gray-50 dark:bg-gray-900
+           text-gray-900 dark:text-gray-100
+           transition-colors duration-300"
+  >
+    <!-- Header -->
+    <Header />
+
+    <!-- Contenido -->
+    <main>
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <Footer />
+  </body>
+</html>
