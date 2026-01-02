@@ -1,22 +1,30 @@
+import { FacebookIcon, TikTokIcon, WhatsAppIcon } from "../icons/icon";
+
 export const homeHeroData = {
+
+  company: {
+    name: "Metalúrgica Jesac",
+    tagline: "Soluciones industriales para la minería",
+  },
+
   badge: "Ingeniería · Precisión · Calidad",
 
   title: {
-    normal: "A community for",
-    highlight: "senior designers",
+    normal: "Soluciones integrales en",
+    highlight: "Operaciones metalúrgicas y mecánicas",
   },
 
   description:
-    "Join hundreds of independent designers building businesses, sharing insights and growing together in a premium community.",
+    "Proveedor de soluciones integrales en los servicios especializados en ingeniería metalmecánica, mantenimiento industrial y soluciones para operaciones mineras, cumpliendo los más altos estándares de calidad, seguridad y eficiencia.",
 
   cta: [
     {
-      label: "Join our Slack",
+      label: "Solicitar cotización",
       href: "/join-slack",
       primary: true,
     },
     {
-      label: "Learn more",
+      label: "Nuestros servicios",
       href: "#stats",
       primary: false,
     },
@@ -24,16 +32,34 @@ export const homeHeroData = {
 
   stats: [
     {
-      value: "10+ yrs",
-      label: "avg experience",
+      value: "5+ años",
+      label: "de experiencia",
     },
     {
-      value: "$700k+",
-      label: "community revenue",
+      value: "100+",
+      label: "proyectos ejecutados",
     },
     {
-      value: "200k+",
-      label: "audience",
+      value: "100%",
+      label: "cumplimiento operativo",
+    },
+  ],
+
+  socials: [
+    {
+      name: "Facebook",
+      href: "https://linkedin.com",
+      icon: FacebookIcon, // lucide-react / heroicons / svg propio
+    },
+    {
+      name: "WhatsApp",
+      href: "https://facebook.com",
+      icon: WhatsAppIcon,
+    },
+    {
+      name: "Tiktok",
+      href: "https://wa.me/51999999999",
+      icon: TikTokIcon,
     },
   ],
 };
