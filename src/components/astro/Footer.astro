@@ -1,19 +1,123 @@
-<footer
-  class="
-    mt-auto
-    border-t border-(--card-border)
-    bg-(--login-bg)
-    text-(--color-primary)/70
-  "
->
+<footer class="relative bg-(--login-bg) text-sm">
+
+  <!-- BANDA SUPERIOR DECORATIVA -->
+  <div class="h-1 w-full bg-linear-to-r from-(--color-primary) to-transparent"></div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <div
+    class="
+      max-w-7xl mx-auto
+      px-6 py-5
+      grid gap-14
+      lg:grid-cols-4
+    "
+  >
+
+    <!-- MARCA -->
+    <div class="space-y-6">
+      <h3 class="text-xl font-semibold tracking-wide text-(--color-primary)">
+        Metálurgica Jesac
+      </h3>
+
+      <p class="text-slate-600 dark:text-slate-400 leading-relaxed max-w-sm">
+        Empresa especializada en soluciones metalúrgicas industriales,
+        fabricación de estructuras y trabajos de alta precisión.
+      </p>
+
+      <!-- CTA -->
+      <a
+        href="/contacto"
+        class="
+          inline-flex items-center gap-2
+          text-(--color-primary)
+          font-medium
+          hover:underline
+        "
+      >
+        Solicitar cotización →
+      </a>
+    </div>
+
+    <!-- SERVICIOS -->
+    <div class="space-y-6">
+      <h4 class="uppercase tracking-widest text-xs font-semibold text-(--color-primary)">
+        Servicios
+      </h4>
+
+      <ul class="space-y-3 text-slate-600 dark:text-slate-400">
+        <li>Estructuras metálicas</li>
+        <li>Soldadura industrial</li>
+        <li>Mantenimiento</li>
+        <li>Fabricación a medida</li>
+      </ul>
+    </div>
+
+    <!-- NAVEGACIÓN -->
+    <div class="space-y-6">
+      <h4 class="uppercase tracking-widest text-xs font-semibold text-(--color-primary)">
+        Empresa
+      </h4>
+
+      <ul class="space-y-3">
+        <li><a href="/" class="footer-link">Inicio</a></li>
+        <li><a href="/servicios" class="footer-link">Servicios</a></li>
+        <li><a href="/galeria" class="footer-link">Galería</a></li>
+        <li><a href="/contacto" class="footer-link">Contacto</a></li>
+      </ul>
+    </div>
+
+    <!-- CONTACTO -->
+    <div class="space-y-6">
+      <h4 class="uppercase tracking-widest text-xs font-semibold text-(--color-primary)">
+        Contacto
+      </h4>
+
+      <ul class="space-y-4 text-slate-600 dark:text-slate-400">
+        <li class="flex items-start gap-3">
+          📍 <span>Juliaca, Puno – Perú</span>
+        </li>
+        <li class="flex items-start gap-3">
+          📞 <span>+51 999 999 999</span>
+        </li>
+        <li class="flex items-start gap-3">
+          ✉️ <span>contacto@jesac.com</span>
+        </li>
+      </ul>
+
+      <!-- REDES -->
+      <div class="flex gap-4 pt-2">
+        <a class="social-btn" aria-label="Facebook">F</a>
+        <a class="social-btn" aria-label="Instagram">I</a>
+        <a class="social-btn" aria-label="WhatsApp">W</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEPARADOR -->
+  <div class="border-t border-(--card-border)"></div>
+
+  <!-- COPYRIGHT -->
   <div
     class="
       max-w-7xl mx-auto
       px-6 py-6
-      text-xs
-      text-center
+      flex flex-col sm:flex-row
+      items-center justify-between
+      text-xs text-slate-500
     "
   >
-    © {new Date().getFullYear()} Empresa Metalúrgica
+    <span>
+      © {new Date().getFullYear()} Metálurgica Jesac
+    </span>
+    <span>
+      Diseño y desarrollo profesional
+    </span>
+    <span>
+      Todo los derechos reservados
+    </span>
   </div>
 </footer>
+
+
+
+·

@@ -39,7 +39,7 @@ export default function DarkModeToggle() {
         className="
           relative inline-flex items-center justify-center
           w-9 h-9
-          border border-(--card-border)
+          border border-(--card-border) dark:border-(--color-secondary)/60
           text-(--color-primary)
           bg-transparent
           transition-all duration-200 ease-out

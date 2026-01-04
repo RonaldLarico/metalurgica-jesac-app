@@ -87,3 +87,30 @@ dialog.closing {
   color: #b8babd;
   transition: transform .25s ease;
 }
+
+.footer-link {
+  color: #64748b;
+  transition: color .3s ease;
+}
+
+.footer-link:hover {
+  color: var(--color-primary);
+}
+
+.social-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 9999px;
+  border: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: var(--color-primary);
+  transition: all .3s ease;
+}
+
+.social-btn:hover {
+  background: var(--color-primary);
+  color: white;
+}

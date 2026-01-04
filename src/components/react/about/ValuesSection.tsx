@@ -4,12 +4,12 @@ import { slideFromLeft, slideFromRight } from "../../utils/motion";
 
 export default function ValuesSection() {
   return (
-    <section className="relative py-20 bg-[var(--login-bg)] dark:bg-slate-950 overflow-hidden">
+    <section className="relative py-10 bg-(--login-bg) dark:bg-slate-950 overflow-hidden">
       {/* Glow decorativo */}
-      <div className="absolute -top-40 -left-40 w-96 h-96 bg-[var(--color-primary)]/10 blur-3xl rounded-full" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-[var(--color-secondary)]/10 blur-3xl rounded-full" />
+      <div className="absolute -top-40 -left-40 w-96 h-96 bg-(--color-primary)/10 blur-3xl rounded-full" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-(--color-secondary)/10 blur-3xl rounded-full" />
 
-      <div className="relative max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-20 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 flex flex-col lg:flex-row lg:gap-0 gap-10 items-center">
         {/* IZQUIERDA */}
         <motion.div
           className="flex-1 flex flex-col gap-10"
@@ -21,8 +21,8 @@ export default function ValuesSection() {
           {/* Header */}
           <div className="space-y-4">
             <div className="flex items-center gap-4">
-              <span className="h-1 w-10 bg-[var(--color-primary)] dark:bg-[var(--color-secondary)]" />
-              <span className="tracking-[0.4em] uppercase font-semibold text-[var(--color-primary)] dark:text-[var(--color-secondary)]">
+              <span className="h-1 w-10 bg-(--color-primary) dark:bg-(--color-secondary)" />
+              <span className="tracking-[0.4em] uppercase font-semibold text-(--color-primary) dark:text-(--color-secondary)">
                 Nuestros Valores
               </span>
             </div>
@@ -52,16 +52,16 @@ export default function ValuesSection() {
                   className="group relative p-6 rounded-xl bg-white/60 dark:bg-white/5 backdrop-blur border border-white/20 dark:border-white/10 shadow-lg hover:shadow-xl transition-all"
                 >
                   {/* Glow hover */}
-                  <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition bg-gradient-to-r blur-xl -z-10 from-[var(--color-primary)]/20 dark:to-[var(--color-secondary)]/50" />
+                  <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition bg-linear-to-r blur-xl -z-10 from-(--color-primary)/20 dark:to-(--color-secondary)/50" />
 
                   <div className="flex items-start gap-5">
                     {/* Badge */}
                     <div
-                      className={`flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br ${
+                      className={`shrink-0 w-12 h-12 rounded-lg bg-linear-to-br ${
                         accents[idx % accents.length]
                       } flex items-center justify-center`}
                     >
-                      <span className="text-lg font-bold tracking-widest text-[var(--color-primary)] dark:text-[var(--color-secondary)] opacity-60">
+                      <span className="text-lg font-bold tracking-widest text-(--color-primary) dark:text-(--color-secondary) opacity-60">
                         {String(idx + 1).padStart(2, "0")}
                       </span>
                     </div>
@@ -92,7 +92,7 @@ export default function ValuesSection() {
           whileHover={{ y: -8 }}
         >
           <img
-            src="/corporate-illustration.svg"
+            src="/images/1767288757340-inox_tig_jesac.webp"
             alt="Valores de la empresa"
             className="w-full max-w-md drop-shadow-2xl"
           />

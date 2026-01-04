@@ -38,7 +38,7 @@ export default function HomeSlider() {
   const loopImages = [...images, ...images];
 
   return (
-    <div className="relative w-full h-90 md:h-130 lg:h-170 overflow-hidden bg-transparent">
+    <div className="relative w-full h-90 md:h-100 lg:h-170 overflow-hidden bg-transparent">
       {/* 📱 MOBILE / TABLET */}
       <div className="flex flex-col gap-4 lg:hidden mt-5">
         {/* overlay izquierdo */}
@@ -114,7 +114,7 @@ export default function HomeSlider() {
           className="
             pointer-events-none absolute top-0 left-0 z-10 h-8 w-full
             bg-linear-to-b from-[#d7ecff] to-transparent
-            dark:from-[#021e2e]
+            dark:from-[#01090e]
           "
         />
 
@@ -123,7 +123,7 @@ export default function HomeSlider() {
           className="
             pointer-events-none absolute bottom-0 left-0 z-10 h-8 w-full
             bg-linear-to-t from-[#d7ecff] to-transparent
-            dark:from-[#021e2e]
+            dark:from-[#01090e]
           "
         />
 
@@ -143,7 +143,7 @@ export default function HomeSlider() {
               src={src}
               alt=""
               className="
-                h-72 w-full object-cover
+                h-50 w-full object-cover
                 border-2 border-[#057ec4]/20
                 dark:border-[#38bdf8]/45
               "
@@ -166,7 +166,7 @@ export default function HomeSlider() {
               src={src}
               alt=""
               className="
-                h-72 w-full object-cover
+                h-50 w-full object-cover
                 border-2 border-[#057ec4]/20
                 dark:border-[#38bdf8]/45
               "

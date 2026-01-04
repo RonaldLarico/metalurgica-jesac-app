@@ -7,21 +7,21 @@ export default function AboutUs() {
   return (
     <section
       id="about-us"
-      className="relative py-10 bg-[var(--login-bg)] dark:bg-slate-950"
+      className="relative py-28 bg-(--login-bg) dark:bg-slate-950"
     >
-      <div className="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-20 items-center">
+      <div className="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row lg:gap-0 gap-10 items-center">
         {/* IZQUIERDA: Imagen o ilustración */}
         <motion.div
-          className="w-full lg:w-1/2 flex justify-center"
+          className="w-full lg:w-1/2 flex justify-center lg:justify-start"
           variants={slideFromLeft}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: false, amount: 0.4 }}
         >
           <img
-            src="/corporate-illustration.svg"
+            src="/images/1767288762860-metalurgica-jesac.webp"
             alt="Sobre Nosotros"
-            className="w-80 h-auto"
+            className="w-full max-w-[70%] h-auto"
           />
         </motion.div>
 
@@ -35,8 +35,8 @@ export default function AboutUs() {
             viewport={{ once: false, amount: 0.4 }}
             className="flex items-center gap-4"
           >
-            <span className="h-1 w-10 bg-[var(--color-primary)] dark:bg-[var(--color-secondary)]" />
-            <span className="tracking-[0.4em] uppercase font-semibold text-[var(--color-primary)] dark:text-[var(--color-secondary)]">
+            <span className="h-1 w-10 bg-(--color-primary) dark:bg-(--color-secondary)" />
+            <span className="tracking-[0.4em] uppercase font-semibold text-(--color-primary) dark:text-(--color-secondary)">
               Sobre nosotros
             </span>
           </motion.div>
@@ -93,7 +93,7 @@ export default function AboutUs() {
                       {feature.title}
                     </h3>
                     <div
-                      className="w-12 h-[2px]"
+                      className="w-12 h-0.5"
                       style={{ backgroundColor: style.border }}
                     />
                   </div>

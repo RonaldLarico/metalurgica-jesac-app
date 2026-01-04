@@ -25,7 +25,7 @@ export const homeHeroData = {
     },
     {
       label: "Nuestros servicios",
-      href: "#stats",
+      href: "#service",
       primary: false,
     },
   ],
@@ -37,11 +37,11 @@ export const homeHeroData = {
     },
     {
       value: "100+",
-      label: "proyectos ejecutados",
+      label: "proyectos",
     },
     {
       value: "100%",
-      label: "cumplimiento operativo",
+      label: "efectividad",
     },
   ],
 

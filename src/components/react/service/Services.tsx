@@ -7,7 +7,7 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="relative py-16 bg-slate-50 dark:bg-slate-950 overflow-hidden"
+      className="relative py-28 bg-slate-50 dark:bg-slate-950 overflow-hidden"
     >
       {/* Decoración sutil de fondo */}
       <div

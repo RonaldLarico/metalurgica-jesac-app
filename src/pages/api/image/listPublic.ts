@@ -8,7 +8,7 @@ export const GET: APIRoute = async () => {
       url: true,
     },
     orderBy: { createdAt: "desc" },
-    take: 20, // evita cargar demasiadas
+    take: 20,
   });
 
   return new Response(JSON.stringify(images), {
