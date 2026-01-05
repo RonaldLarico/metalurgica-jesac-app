@@ -15,7 +15,7 @@ const position: [number, number] = [-15.475404, -70.1551175]; // Juliaca
 
 export default function MapSection() {
   return (
-    <section className="py-10 bg-(--login-bg) dark:bg-slate-950">
+    <section className="py-10">
       <div className="max-w-6xl mx-auto px-4 space-y-16">
         {/* HEADER */}
         <motion.div

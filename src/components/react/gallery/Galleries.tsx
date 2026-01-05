@@ -44,7 +44,7 @@ export default function Gallery() {
   };
 
   return (
-    <section className="py-28 bg-(--login-bg) dark:bg-slate-950">
+    <section className="py-28">
       <div className="max-w-7xl mx-auto px-4 space-y-14">
         {/* HEADER */}
         <motion.div

@@ -7,17 +7,8 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="relative py-28 bg-slate-50 dark:bg-slate-950 overflow-hidden"
+      className="relative py-28 overflow-hidden"
     >
-      {/* Decoración sutil de fondo */}
-      <div
-        className="
-          pointer-events-none absolute inset-0
-          bg-[radial-gradient(circle_at_15%_20%,rgba(5,126,196,0.2),transparent_45%)]
-          dark:bg-[radial-gradient(circle_at_15%_20%,rgba(56,189,248,0.3),transparent_45%)]
-        "
-      />
-
       <div className="relative max-w-7xl mx-auto px-4 space-y-10">
         {/* HEADER */}
         <header className="max-w-4xl space-y-6">
@@ -43,7 +34,7 @@ export default function Services() {
           >
             Ingeniería y fabricación para la{" "}
             <span className="relative inline-block">
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-[#057ec4] to-[#ccd33b] dark:from-[#38bdf8] dark:to-[#e4e879]">
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-[#057ec4] to-[#ccd33b]">
                 minería moderna
               </span>
             </span>

@@ -20,7 +20,7 @@ export const homeHeroData = {
   cta: [
     {
       label: "Solicitar cotización",
-      href: "/join-slack",
+      href: "https://wa.me/+51957033871?text=Hola,%20deseo%20realizar%20una%20consulta...",
       primary: true,
     },
     {
@@ -48,17 +48,17 @@ export const homeHeroData = {
   socials: [
     {
       name: "Facebook",
-      href: "https://linkedin.com",
-      icon: FacebookIcon, // lucide-react / heroicons / svg propio
+      href: "https://www.facebook.com/metalurgica.jesac",
+      icon: FacebookIcon,
     },
     {
       name: "WhatsApp",
-      href: "https://facebook.com",
+      href: "https://wa.me/+51957033871?text=Hola,%20deseo%20realizar%20una%20consulta...",
       icon: WhatsAppIcon,
     },
     {
       name: "Tiktok",
-      href: "https://wa.me/51999999999",
+      href: "https://www.tiktok.com/@juvefrank",
       icon: TikTokIcon,
     },
   ],

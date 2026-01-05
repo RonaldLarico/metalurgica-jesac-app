@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
+import { homeHeroData } from "../../../constants/home.data";
 
 export default function ContactSection() {
   return (
-    <section className="py-28 bg-(--login-bg) dark:bg-slate-950">
+    <section className="py-28">
       <div className="max-w-6xl mx-auto px-4 space-y-16">
         {/* HEADER */}
         <motion.div
@@ -19,7 +20,7 @@ export default function ContactSection() {
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-600 dark:text-slate-100">
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-600 dark:text-slate-100/90">
             Hablemos de tu próximo proyecto
           </h2>
 
@@ -38,7 +39,7 @@ export default function ContactSection() {
           className="
             grid grid-cols-1 lg:grid-cols-2
             gap-14
-            bg-white dark:bg-white/5
+            bg-white dark:bg-slate-900
             border border-(--color-primary)
             rounded-2xl
             shadow-xl
@@ -46,30 +47,99 @@ export default function ContactSection() {
           "
         >
           {/* INFO */}
-          <div className="space-y-8">
-            <h3 className="text-2xl font-semibold text-slate-800 dark:text-slate-100">
-              Información de contacto
-            </h3>
+          <div className="space-y-10">
+            {/* TÍTULO */}
+            <div className="space-y-3">
+              <h3 className="text-2xl font-semibold tracking-wide text-slate-800/70 dark:text-slate-100/90">
+                Información de contacto
+              </h3>
 
-            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-              Estamos disponibles para resolver tus dudas, cotizaciones o
-              asesorías personalizadas.
-            </p>
+              <p className="text-slate-600/80 dark:text-slate-400 leading-relaxed max-w-md tracking-wide">
+                Estamos disponibles para resolver tus dudas, cotizaciones o
+                asesorías personalizadas.
+              </p>
+            </div>
 
-            <ul className="space-y-4 text-slate-700 dark:text-slate-300">
-              <li>
-                <strong>Email:</strong>{" "}
-                <span className="ml-2">jesac@metalurgicajesac.com</span>
+            {/* DATOS DE CONTACTO */}
+            <ul className="space-y-6 text-slate-700 dark:text-slate-300">
+              <li className="flex items-start gap-4">
+                <span
+                  className="w-10 h-10 flex items-center justify-center rounded-full
+                       bg-slate-100 dark:bg-slate-800
+                       text-(--color-primary)"
+                >
+                  ✉
+                </span>
+                <div className="space-y-1">
+                  <p className="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                    Email
+                  </p>
+                  <p className="font-medium text-slate-800/70 dark:text-slate-100/90">
+                    consultas@metalurgicajesac.com
+                  </p>
+                </div>
               </li>
-              <li>
-                <strong>Teléfono:</strong>{" "}
-                <span className="ml-2">+51 957 033 871</span>
+
+              <li className="flex items-start gap-4">
+                <span
+                  className="w-10 h-10 flex items-center justify-center rounded-full
+                       bg-slate-100 dark:bg-slate-800
+                       text-(--color-primary)"
+                >
+                  ☎
+                </span>
+                <div className="space-y-1">
+                  <p className="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                    Teléfono
+                  </p>
+                  <p className="font-medium text-slate-800/70 dark:text-slate-100/90">
+                    +51 957 033 871
+                  </p>
+                </div>
               </li>
-              <li>
-                <strong>Ubicación:</strong>{" "}
-                <span className="ml-2">Juliaca, Perú</span>
+
+              <li className="flex items-start gap-4">
+                <span
+                  className="w-10 h-10 flex items-center justify-center rounded-full
+                       bg-slate-100 dark:bg-slate-800
+                       text-(--color-primary)"
+                >
+                  📍
+                </span>
+                <div className="space-y-1">
+                  <p className="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                    Ubicación
+                  </p>
+                  <p className="font-medium text-slate-800/70 dark:text-slate-100/90">
+                    Juliaca, Perú
+                  </p>
+                </div>
               </li>
             </ul>
+
+            {/* REDES SOCIALES */}
+            <div className="pt-6 border-t border-slate-300 dark:border-slate-600">
+              <p className="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-4">
+                Síguenos
+              </p>
+              <div className="flex items-center gap-4">
+                {homeHeroData.socials.map((social) => {
+                  const Icon = social.icon;
+                  return (
+                    <a
+                      key={social.name}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.name}
+                      className="social-btn"
+                    >
+                      <Icon className="w-5 h-5" />
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
           {/* FORMULARIO */}
@@ -81,7 +151,7 @@ export default function ContactSection() {
                 </label>
                 <input
                   type="text"
-                  placeholder="Tu nombre"
+                  placeholder="Nombre completo"
                   className="
                     w-full px-4 py-3
                     rounded-lg
@@ -93,7 +163,6 @@ export default function ContactSection() {
                   "
                 />
               </div>
-
               <div>
                 <label className="block mb-2 text-sm font-medium text-slate-700 dark:text-slate-300">
                   Email
@@ -113,7 +182,24 @@ export default function ContactSection() {
                 />
               </div>
             </div>
-
+            <div>
+              <label className="block mb-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                Asunto
+              </label>
+              <input
+                type="text"
+                placeholder="Asunto"
+                className="
+                    w-full px-4 py-3
+                    rounded-lg
+                    bg-transparent
+                    border border-slate-300 dark:border-slate-600
+                    focus:outline-none focus:ring-2
+                    focus:ring-(--color-primary)
+                    text-slate-800 dark:text-slate-100
+                  "
+              />
+            </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-slate-700 dark:text-slate-300">
                 Mensaje

@@ -8,17 +8,8 @@ export default function Hero() {
     homeHeroData;
 
   return (
-    <section className="relative overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <section className="relative overflow-hidden text-slate-900 dark:text-slate-100">
       <div className="relative z-10 overflow-hidden">
-        {/* Glow decorativo */}
-        <div
-          className="
-            absolute inset-0 pointer-events-none
-            bg-[radial-gradient(circle_at_20%_25%,rgba(5,126,196,0.35),transparent_55%),radial-gradient(circle_at_80%_60%,rgba(56,189,248,0.35),transparent_60%)]
-            dark:bg-[radial-gradient(circle_at_20%_25%,rgba(56,189,248,0.35),transparent_55%),radial-gradient(circle_at_10%_50%,rgba(56,189,248,0.35),transparent_60%)]
-          "
-        />
-
         <div className="relative z-10 max-w-7xl mx-auto px-4 py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* IZQUIERDA */}
           <motion.div
@@ -40,7 +31,7 @@ export default function Hero() {
             {/* BADGE */}
             <motion.span
               variants={item}
-              className="inline-block mb-10 bg-[#057ec4]/15 dark:bg-[#38bdf8]/20 px-3 py-1 text-[13px] font-semibold tracking-[0.3em] uppercase text-[#057ec4] dark:text-[#38bdf8]"
+              className="inline-block mb-2 rounded-xl bg-[#057ec4]/15 dark:bg-[#38bdf8]/20 px-3 py-1 text-[13px] font-semibold tracking-[0.3em] uppercase text-[#057ec4] dark:text-[#38bdf8]"
             >
               {badge}
             </motion.span>
@@ -49,7 +40,7 @@ export default function Hero() {
               <span className="block mb-2 mt-5 text-[14px] tracking-[0.3em] uppercase text-slate-600 dark:text-slate-300 font-bold">
                 {company.tagline}
               </span>
-              <h2 className="uppercase mb-3 text-3xl sm:text-5xl font-extrabold tracking-tight text-(--color-primary) dark:text-(--color-secondary)">
+              <h2 className="uppercase mb-3 text-4xl sm:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-[#057ec4] to-[#ccd33b]">
                 {company.name}
               </h2>
             </motion.div>
@@ -84,6 +75,7 @@ export default function Hero() {
                       px-4 py-3 text-sm font-semibold text-white shadow-lg
                       transition-all duration-300 hover:scale-105 hover:shadow-xl
                     "
+                    target="_blank"
                   >
                     {button.label}
                   </a>
@@ -141,23 +133,25 @@ export default function Hero() {
           {/* DERECHA */}
           <HomeSlider />
         </div>
-        {/* LINEA ONDULADA AL FINAL */}
-    <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-0">
-      <svg
-        className="relative block w-full h-10"
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="none"
-        viewBox="0 0 1200 120"
-      >
-        <path
-          d="M0,60 C150,20 350,100 600,60 C850,20 1050,100 1200,60"
-          fill="none"
-          stroke="#057ec4"           // Aquí va el color de la línea
-          strokeWidth="3"            // Grosor de la línea
-          strokeLinecap="round"      // Bordes redondeados
-        />
-      </svg>
-    </div>
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-0 pointer-events-none">
+          <svg
+            className="relative block w-full h-24"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="none"
+            viewBox="0 0 1200 120"
+          >
+            <defs>
+              <linearGradient id="waveGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#057ec4" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="#057ec4" stopOpacity="0.001" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M0,70 C200,10 400,110 600,60 C800,10 1000,110 1200,70 L1200,120 L0,120 Z"
+              fill="url(#waveGradient)"
+            />
+          </svg>
+        </div>
       </div>
     </section>
   );

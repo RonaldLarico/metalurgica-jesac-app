@@ -38,7 +38,7 @@ export default function DarkModeToggle() {
         aria-label="Cambiar tema"
         className="
           relative inline-flex items-center justify-center
-          w-9 h-9
+          w-9 h-9 rounded-md
           border border-(--card-border) dark:border-(--color-secondary)/60
           text-(--color-primary)
           bg-transparent

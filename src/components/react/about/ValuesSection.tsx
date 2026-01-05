@@ -4,11 +4,7 @@ import { slideFromLeft, slideFromRight } from "../../utils/motion";
 
 export default function ValuesSection() {
   return (
-    <section className="relative py-10 bg-(--login-bg) dark:bg-slate-950 overflow-hidden">
-      {/* Glow decorativo */}
-      <div className="absolute -top-40 -left-40 w-96 h-96 bg-(--color-primary)/10 blur-3xl rounded-full" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-(--color-secondary)/10 blur-3xl rounded-full" />
-
+    <section className="relative py-10 overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-4 flex flex-col lg:flex-row lg:gap-0 gap-10 items-center">
         {/* IZQUIERDA */}
         <motion.div
@@ -26,7 +22,6 @@ export default function ValuesSection() {
                 Nuestros Valores
               </span>
             </div>
-
             <h2 className="text-3xl md:text-4xl font-bold text-slate-600 dark:text-gray-300 leading-tight">
               Principios que definen nuestra forma de trabajar
             </h2>
@@ -92,7 +87,7 @@ export default function ValuesSection() {
           whileHover={{ y: -8 }}
         >
           <img
-            src="/images/1767288757340-inox_tig_jesac.webp"
+            src="/images/inox_tig_jesac.webp"
             alt="Valores de la empresa"
             className="w-full max-w-md drop-shadow-2xl"
           />

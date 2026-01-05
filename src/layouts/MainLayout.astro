@@ -33,18 +33,18 @@ const { title = "Metalúrgica - Jesac" } = Astro.props;
   </head>
 
   <body
-    class="min-h-screen flex flex-col
-    bg-gray-50 dark:bg-gray-900
-           text-gray-900 dark:text-gray-100
+    class="min-h-screen
            transition-colors duration-300"
   >
     <!-- Header -->
     <Header />
 
     <!-- Contenido -->
-    <main>
-      <slot />
-    </main>
+    <div class="relative bg-landing">
+      <main class="relative z-10">
+        <slot />
+      </main>
+    </div>
 
     <!-- Footer -->
     <Footer />

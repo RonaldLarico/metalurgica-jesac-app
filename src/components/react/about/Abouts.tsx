@@ -7,7 +7,7 @@ export default function AboutUs() {
   return (
     <section
       id="about-us"
-      className="relative py-28 bg-(--login-bg) dark:bg-slate-950"
+      className="relative py-28 overflow-x-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row lg:gap-0 gap-10 items-center">
         {/* IZQUIERDA: Imagen o ilustración */}
@@ -19,7 +19,7 @@ export default function AboutUs() {
           viewport={{ once: false, amount: 0.4 }}
         >
           <img
-            src="/images/1767288762860-metalurgica-jesac.webp"
+            src="/images/metalurgica-jesac.webp"
             alt="Sobre Nosotros"
             className="w-full max-w-[70%] h-auto"
           />

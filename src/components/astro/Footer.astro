@@ -1,23 +1,29 @@
-<footer class="relative bg-(--login-bg) text-sm">
+---
+import { homeHeroData } from "../../constants/home.data";
+---
 
+<footer class="relative bg-(--login-bg) text-sm">
   <!-- BANDA SUPERIOR DECORATIVA -->
-  <div class="h-1 w-full bg-linear-to-r from-(--color-primary) to-transparent"></div>
+  <div class="h-1 w-full bg-linear-to-r from-(--color-primary) to-transparent">
+  </div>
 
   <!-- CONTENIDO PRINCIPAL -->
   <div
-    class="
-      max-w-7xl mx-auto
+    class="max-w-7xl mx-auto
       px-6 py-5
       grid gap-14
-      lg:grid-cols-4
-    "
+      lg:grid-cols-4"
   >
-
     <!-- MARCA -->
     <div class="space-y-6">
-      <h3 class="text-xl font-semibold tracking-wide text-(--color-primary)">
-        Metálurgica Jesac
-      </h3>
+      <div class="flex justify-center">
+        <img
+            src="/images/logo-jesac.png"
+            alt="metalurgica-jesac"
+            width="180"
+            height="180"
+          />
+      </div>
 
       <p class="text-slate-600 dark:text-slate-400 leading-relaxed max-w-sm">
         Empresa especializada en soluciones metalúrgicas industriales,
@@ -27,12 +33,10 @@
       <!-- CTA -->
       <a
         href="/contacto"
-        class="
-          inline-flex items-center gap-2
+        class="inline-flex items-center gap-2
           text-(--color-primary)
           font-medium
-          hover:underline
-        "
+          hover:underline"
       >
         Solicitar cotización →
       </a>
@@ -40,12 +44,14 @@
 
     <!-- SERVICIOS -->
     <div class="space-y-6">
-      <h4 class="uppercase tracking-widest text-xs font-semibold text-(--color-primary)">
+      <h4
+        class="uppercase tracking-widest text-xs font-semibold text-(--color-primary)"
+      >
         Servicios
       </h4>
 
       <ul class="space-y-3 text-slate-600 dark:text-slate-400">
-        <li>Estructuras metálicas</li>
+        <li>Consultoría en procesos metalúgicos</li>
         <li>Soldadura industrial</li>
         <li>Mantenimiento</li>
         <li>Fabricación a medida</li>
@@ -54,41 +60,60 @@
 
     <!-- NAVEGACIÓN -->
     <div class="space-y-6">
-      <h4 class="uppercase tracking-widest text-xs font-semibold text-(--color-primary)">
+      <h4
+        class="uppercase tracking-widest text-xs font-semibold text-(--color-primary)"
+      >
         Empresa
       </h4>
 
       <ul class="space-y-3">
         <li><a href="/" class="footer-link">Inicio</a></li>
-        <li><a href="/servicios" class="footer-link">Servicios</a></li>
-        <li><a href="/galeria" class="footer-link">Galería</a></li>
-        <li><a href="/contacto" class="footer-link">Contacto</a></li>
+        <li><a href="/#service" class="footer-link">Servicios</a></li>
+        <li><a href="/#gallery" class="footer-link">Galería</a></li>
+        <li><a href="/#about" class="footer-link">Nosotros</a></li>
+        <li><a href="/#contact" class="footer-link">Contacto</a></li>
       </ul>
     </div>
 
     <!-- CONTACTO -->
     <div class="space-y-6">
-      <h4 class="uppercase tracking-widest text-xs font-semibold text-(--color-primary)">
+      <h4
+        class="uppercase tracking-widest text-xs font-semibold text-(--color-primary)"
+      >
         Contacto
       </h4>
 
       <ul class="space-y-4 text-slate-600 dark:text-slate-400">
         <li class="flex items-start gap-3">
-          📍 <span>Juliaca, Puno – Perú</span>
+          📍 <span>Juliaca – Perú</span>
         </li>
         <li class="flex items-start gap-3">
-          📞 <span>+51 999 999 999</span>
+          📞 <span>+51 957 033 871</span>
         </li>
         <li class="flex items-start gap-3">
-          ✉️ <span>contacto@jesac.com</span>
+          ✉️ <span>consultas@metalurgicajesac.com</span>
         </li>
       </ul>
 
-      <!-- REDES -->
+      {/* REDES */}
       <div class="flex gap-4 pt-2">
-        <a class="social-btn" aria-label="Facebook">F</a>
-        <a class="social-btn" aria-label="Instagram">I</a>
-        <a class="social-btn" aria-label="WhatsApp">W</a>
+        {
+          homeHeroData.socials.map((social) => {
+            const Icon = social.icon;
+
+            return (
+              <a
+                href={social.href}
+                aria-label={social.name}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-btn"
+              >
+                <Icon className="w-5 h-5" />
+              </a>
+            );
+          })
+        }
       </div>
     </div>
   </div>
@@ -98,26 +123,18 @@
 
   <!-- COPYRIGHT -->
   <div
-    class="
-      max-w-7xl mx-auto
+    class="max-w-7xl mx-auto
       px-6 py-6
       flex flex-col sm:flex-row
       items-center justify-between
-      text-xs text-slate-500
-    "
+      text-xs text-slate-500"
   >
     <span>
       © {new Date().getFullYear()} Metálurgica Jesac
     </span>
-    <span>
-      Diseño y desarrollo profesional
-    </span>
-    <span>
-      Todo los derechos reservados
-    </span>
+    <span> Diseño y desarrollo profesional </span>
+    <span> Todo los derechos reservados </span>
   </div>
 </footer>
-
-
 
 ·
