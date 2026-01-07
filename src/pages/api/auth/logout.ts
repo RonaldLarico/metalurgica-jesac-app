@@ -6,15 +6,14 @@ export const POST: APIRoute = async ({ cookies }) => {
     path: "/",
     sameSite: "lax",
     secure: import.meta.env.PROD,
+    domain: ".metalurgicajesac.com",
+    httpOnly: true,
   });
 
-  return new Response(
-    JSON.stringify({ ok: true }),
-    {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  return new Response(JSON.stringify({ ok: true }), {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 };

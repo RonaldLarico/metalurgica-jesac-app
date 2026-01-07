@@ -23,10 +23,11 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   }
 
   cookies.set("session", String(user.id), {
-    httpOnly: true,
-    sameSite: "lax",
     path: "/",
+    sameSite: "lax",
     secure: import.meta.env.PROD,
+    domain: ".metalurgicajesac.com",
+    httpOnly: true,
   });
 
   return new Response(JSON.stringify({ ok: true }), { status: 200 });
