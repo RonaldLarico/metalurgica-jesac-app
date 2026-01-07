@@ -1,0 +1,45 @@
+name: Deploy Docker to Ubuntu
+
+on:
+  push:
+    branches:
+      - main  # o la rama que uses en producción
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Clonar repo
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2️⃣ Configurar SSH
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      # 3️⃣ Crear carpeta en el servidor si no existe
+      - name: Create deploy directory
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "mkdir -p ~/jesac-web"
+
+      # 4️⃣ Copiar archivos al servidor
+      - name: Sync files to server
+        run: |
+          rsync -avz --exclude '.github/' ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:~/jesac-web/
+
+      # 5️⃣ Conectar al servidor y levantar Docker
+      - name: Deploy Docker
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+            cd ~/jesac-web
+            export DATABASE_URL="${{ secrets.DATABASE_URL }}"
+            docker-compose down
+            docker-compose pull || true
+            docker-compose build --no-cache
+            docker-compose up -d
+            # Aplicar migraciones si usas Prisma
+            docker-compose exec app npx prisma migrate deploy
+          EOF
