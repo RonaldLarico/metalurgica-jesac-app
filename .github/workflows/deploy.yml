@@ -20,21 +20,19 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
-      # 🔐 2.1️⃣ Registrar el servidor en known_hosts (SOLUCIÓN AL ERROR)
-      - name: Add server to known_hosts
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
-
       # 3️⃣ Crear carpeta en el servidor si no existe
       - name: Create deploy directory
         run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "mkdir -p ~/jesac-web"
+          ssh -o StrictHostKeyChecking=no \
+          ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} \
+          "mkdir -p ~/jesac-web"
 
       # 4️⃣ Copiar archivos al servidor
       - name: Sync files to server
         run: |
-          rsync -avz --exclude '.github/' ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:~/jesac-web/
+          rsync -avz --delete \
+          --exclude '.github/' \
+          ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:~/jesac-web/
 
       # 5️⃣ Conectar al servidor y levantar Docker
       - name: Deploy Docker
