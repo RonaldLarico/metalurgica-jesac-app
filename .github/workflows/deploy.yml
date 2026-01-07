@@ -56,8 +56,8 @@ jobs:
       - name: Deploy Docker
         run: |
           ssh -o StrictHostKeyChecking=no \
-              -o ProxyCommand="ssh -W %h:%p -i $HOME/.ssh/github_actions ${{ secrets.SERVER_USER }}@45.191.99.93" \
-              ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+              -o ProxyCommand="ssh -W %h:%p ${{ secrets.SERVER_USER }}@45.191.99.93" \
+              ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}
             cd ~/jesac-web
             docker compose down
             docker compose pull || true
