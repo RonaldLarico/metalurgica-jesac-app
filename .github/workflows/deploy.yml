@@ -1,4 +1,4 @@
-name: Deploy Docker to Ubuntu
+name: Deploy Docker to Ubuntu via Secure Tunnel
 
 on:
   push:
@@ -14,41 +14,50 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2️⃣ Configurar SSH
+      # 2️⃣ Configurar SSH para el túnel
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.7.0
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
-      # 3️⃣ Crear carpeta de deploy si no existe
+      # 3️⃣ Crear carpeta de deploy si no existe en VPS usando túnel seguro
       - name: Create deploy directory
         run: |
           ssh -o StrictHostKeyChecking=no \
-          ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} \
-          "mkdir -p ~/jesac-web"
+              -o ProxyCommand="ssh -W %h:%p -i $HOME/.ssh/github_actions ${{ secrets.SERVER_USER }}@45.191.99.93" \
+              ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} \
+              "mkdir -p ~/jesac-web"
 
-      # 4️⃣ Sincronizar archivos al servidor
+      # 4️⃣ Sincronizar archivos al VPS (excluyendo GitHub Actions y .env)
       - name: Sync files to server
         run: |
           rsync -avz --delete \
-          --exclude '.github/' \
-          --exclude '.env' \
-          ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:~/jesac-web/
+            --exclude '.github/' \
+            --exclude '.env' \
+            -e "ssh -o StrictHostKeyChecking=no \
+                -i $HOME/.ssh/github_actions \
+                -o ProxyCommand='ssh -W %h:%p -i $HOME/.ssh/github_actions ${{ secrets.SERVER_USER }}@45.191.99.93'" \
+            ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:~/jesac-web/
 
-      # 5️⃣ Crear .env en el servidor (NO en GitHub)
+      # 5️⃣ Crear .env en el servidor (desde GitHub Secrets)
       - name: Create .env on server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << EOF
+          ssh -o StrictHostKeyChecking=no \
+              -o ProxyCommand="ssh -W %h:%p -i $HOME/.ssh/github_actions ${{ secrets.SERVER_USER }}@45.191.99.93" \
+              ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
             mkdir -p ~/jesac-web
-            printf "DATABASE_URL=%s\nNODE_ENV=production\n" "${{ secrets.DATABASE_URL }}" > ~/jesac-web/.env
+            cat > ~/jesac-web/.env <<EOT
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
+            NODE_ENV=production
+            EOT
           EOF
-
 
       # 6️⃣ Levantar Docker en el servidor
       - name: Deploy Docker
         run: |
           ssh -o StrictHostKeyChecking=no \
-          ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+              -o ProxyCommand="ssh -W %h:%p -i $HOME/.ssh/github_actions ${{ secrets.SERVER_USER }}@45.191.99.93" \
+              ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
             cd ~/jesac-web
             docker compose down
             docker compose pull || true
