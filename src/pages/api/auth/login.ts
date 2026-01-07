@@ -22,12 +22,15 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     return new Response("Credenciales inválidas", { status: 401 });
   }
 
+  const maxAge = 60 * 60 * 8;
+
   cookies.set("session", String(user.id), {
     path: "/",
     sameSite: "lax",
     secure: import.meta.env.PROD,
     domain: ".metalurgicajesac.com",
     httpOnly: true,
+    maxAge,
   });
 
   return new Response(JSON.stringify({ ok: true }), { status: 200 });

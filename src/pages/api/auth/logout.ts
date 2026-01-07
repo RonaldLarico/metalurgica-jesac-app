@@ -9,6 +9,13 @@ export const POST: APIRoute = async ({ cookies }) => {
     domain: ".metalurgicajesac.com",
     httpOnly: true,
   });
+  cookies.delete("session", {
+    path: "/",
+    sameSite: "lax",
+    secure: import.meta.env.PROD,
+    domain: "www.metalurgicajesac.com",
+    httpOnly: true,
+  });
 
   return new Response(JSON.stringify({ ok: true }), {
     status: 200,
