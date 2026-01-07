@@ -24,64 +24,81 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       fs.mkdirSync(uploadsDir, { recursive: true });
     }
 
-    const savedImages = [];
+    const savedFiles = [];
     const responseUrls: string[] = [];
 
     for (const item of items) {
-      // 🔑 IGNORAR metadata de FilePond
       if (!(item instanceof File)) continue;
 
-      const buffer = Buffer.from(await item.arrayBuffer());
-      const metadata = await sharp(buffer).metadata();
+      const originalBuffer = Buffer.from(await item.arrayBuffer());
+      const extname = path.extname(item.name).toLowerCase();
 
-      // Comprimir y convertir a WebP
-      const outputBuffer = await sharp(buffer)
-        .resize({ width: 3000, withoutEnlargement: true }) // opcional
-        .webp({ quality: 92, effort: 4, smartSubsample: true })
-        .toBuffer(); // generamos buffer en memoria
+      let fileName: string;
+      let publicUrl: string;
+      let stats: fs.Stats;
 
-      // Detectar extensión real del buffer generado
-      const outputMetadata = await sharp(outputBuffer).metadata();
-      const ext = outputMetadata.format; // por ejemplo: 'webp', 'jpeg', 'png', etc.
+      // 🔹 Imagen: comprimir y convertir a WebP
+      if ([".png", ".jpg", ".jpeg", ".webp"].includes(extname)) {
+        const outputBuffer = await sharp(originalBuffer)
+          .resize({ width: 3000, withoutEnlargement: true })
+          .webp({ quality: 92, effort: 4, smartSubsample: true })
+          .toBuffer();
 
-      const fileName = `${Date.now()}-${path.parse(item.name).name}.${ext}`;
-      const filePath = path.join(uploadsDir, fileName);
-      const publicUrl = `/uploads/${fileName}`;
+        fileName = `${Date.now()}-${path.parse(item.name).name}.webp`;
+        const filePath = path.join(uploadsDir, fileName);
+        fs.writeFileSync(filePath, outputBuffer);
+        publicUrl = `/uploads/${fileName}`;
+        stats = fs.statSync(filePath);
 
-      // 💾 Guardar archivo físico
-      fs.writeFileSync(filePath, outputBuffer);
+        const metadata = await sharp(outputBuffer).metadata();
 
-      const stats = fs.statSync(filePath);
+        savedFiles.push({
+          url: publicUrl,
+          size: stats.size,
+          width: metadata.width,
+          height: metadata.height,
+          format: metadata.format,
+          userId: Number(userId),
+        });
 
-      // 📌 Preparar registro para DB
-      savedImages.push({
-        url: publicUrl,
-        size: stats.size,
-        width: outputMetadata.width,
-        height: outputMetadata.height,
-        format: outputMetadata.format,
-        userId: Number(userId),
-      });
+        responseUrls.push(publicUrl);
 
-      responseUrls.push(publicUrl);
+      // 🔹 Video MP4: subir tal cual, sin comprimir
+      } else if (extname === ".mp4") {
+        fileName = `${Date.now()}-${path.parse(item.name).name}.mp4`;
+        const filePath = path.join(uploadsDir, fileName);
+        fs.writeFileSync(filePath, originalBuffer);
+        publicUrl = `/uploads/${fileName}`;
+        stats = fs.statSync(filePath);
+
+        savedFiles.push({
+          url: publicUrl,
+          size: stats.size,
+          width: null,
+          height: null,
+          format: "mp4",
+          userId: Number(userId),
+        });
+
+        responseUrls.push(publicUrl);
+
+      } else {
+        continue; // Ignorar otros tipos de archivo
+      }
     }
 
-    if (savedImages.length === 0) {
-      return new Response("No valid image files", { status: 400 });
+    if (savedFiles.length === 0) {
+      return new Response("No valid files", { status: 400 });
     }
 
-    // 💾 Guardar TODAS las URLs en la base de datos
-    await prisma.image.createMany({
-      data: savedImages,
-    });
+    // 💾 Guardar archivos en la DB
+    await prisma.image.createMany({ data: savedFiles });
 
     return new Response(
-      JSON.stringify({
-        ok: true,
-        urls: responseUrls,
-      }),
+      JSON.stringify({ ok: true, urls: responseUrls }),
       { headers: { "Content-Type": "application/json" } }
     );
+
   } catch (error) {
     console.error("UPLOAD ERROR:", error);
     return new Response("Internal Server Error", { status: 500 });

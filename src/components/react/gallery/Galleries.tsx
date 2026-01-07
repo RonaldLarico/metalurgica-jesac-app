@@ -83,17 +83,34 @@ export default function Gallery() {
                 transition-all duration-300
               "
             >
-              <img
-                src={img.url}
-                alt="Galería"
-                className="
-                  w-full h-60 object-cover
-                  transition-transform duration-700 ease-out
-                  filter grayscale-15 contrast-102
-                  group-hover:grayscale-0
-                  group-hover:scale-105
-                "
-              />
+              {img.url.endsWith(".mp4") ? (
+                <video
+                  src={img.url}
+                  className="
+            w-full h-60 object-cover
+            transition-transform duration-700 ease-out
+            filter grayscale-15 contrast-102
+            group-hover:grayscale-0
+            group-hover:scale-105
+          "
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                />
+              ) : (
+                <img
+                  src={img.url}
+                  alt="Galería"
+                  className="
+            w-full h-60 object-cover
+            transition-transform duration-700 ease-out
+            filter grayscale-15 contrast-102
+            group-hover:grayscale-0
+            group-hover:scale-105
+          "
+                />
+              )}
 
               {/* Overlay elegante */}
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />

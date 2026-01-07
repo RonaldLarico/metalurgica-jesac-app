@@ -39,12 +39,12 @@ export default function ImageUpload({ onUploaded }: Props) {
         allowMultiple
         maxFiles={5}
 
-        acceptedFileTypes={["image/png", "image/jpeg", "image/webp"]}
-        fileValidateTypeLabelExpectedTypes="Solo imágenes PNG, JPG o WEBP"
+        acceptedFileTypes={["image/png", "image/jpeg", "image/webp", "video/mp4"]}
+        fileValidateTypeLabelExpectedTypes="Solo imágenes PNG, JPG, WEBP o videos MP4"
 
-        maxFileSize="16MB"
+        maxFileSize="100MB"
         labelMaxFileSizeExceeded="El archivo es muy pesado"
-        labelMaxFileSize="Tamaño máximo: 16MB"
+        labelMaxFileSize="Tamaño máximo: 100MB"
 
         labelIdle='Arrastra imágenes o <span class="filepond--label-action">haz click aquí</span>'
 

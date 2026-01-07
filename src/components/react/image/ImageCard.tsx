@@ -61,12 +61,23 @@ const ImageCard = ({
           cursor-pointer
         "
       >
-        <img
-          src={image.url}
-          alt=""
-          loading="lazy"
-          className="w-full h-52 object-cover"
-        />
+        {image.format === "mp4" ? (
+          <video
+            src={image.url}
+            className="w-full h-52 object-cover"
+            controls
+            autoPlay
+            muted
+            loop
+          />
+        ) : (
+          <img
+            src={image.url}
+            alt={image.url}
+            loading="lazy"
+            className="w-full h-52 object-cover"
+          />
+        )}
 
         {/* INFO BAR */}
         <div
@@ -142,11 +153,22 @@ const ImageCard = ({
             bg-(--login-bg)/30
           "
         >
-          <img
-            src={image.url}
-            alt=""
-            className="max-w-[80vw] max-h-[80vh] object-contain"
-          />
+          {image.format === "mp4" ? (
+            <video
+              src={image.url}
+              className="max-w-[80vw] max-h-[80vh] object-contain"
+              controls
+              autoPlay
+              muted
+              loop
+            />
+          ) : (
+            <img
+              src={image.url}
+              alt=""
+              className="max-w-[80vw] max-h-[80vh] object-contain"
+            />
+          )}
 
           {/* INFO */}
           <div

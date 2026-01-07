@@ -50,16 +50,33 @@ export default function GalleryModal({
             "
           >
             {/* Imagen */}
-            <img
-              src={images[activeIndex].url}
-              alt="Imagen ampliada"
-              className="
-                max-w-full max-h-[85vh]
-                object-contain
-                shadow-2xl
-                border-2 border-(--color-primary)
-              "
-            />
+            {images[activeIndex].url.endsWith(".mp4") ? (
+              <video
+                src={images[activeIndex].url}
+                className="
+      max-w-full max-h-[85vh]
+      object-contain
+      shadow-2xl
+      border-2 border-(--color-primary)
+    "
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+              />
+            ) : (
+              <img
+                src={images[activeIndex].url}
+                alt="Imagen ampliada"
+                className="
+      max-w-full max-h-[85vh]
+      object-contain
+      shadow-2xl
+      border-2 border-(--color-primary)
+    "
+              />
+            )}
 
             {/* Cerrar */}
             <button
