@@ -148,7 +148,7 @@ export default function LoginForm({
       </button>
 
       {/* SWITCH */}
-      <button
+      {/* <button
         type="button"
         onClick={onSwitchToRegister}
         className="
@@ -159,7 +159,7 @@ export default function LoginForm({
         "
       >
         ¿No tienes cuenta? Regístrate
-      </button>
+      </button> */}
     </form>
   );
 }
