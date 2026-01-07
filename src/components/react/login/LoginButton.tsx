@@ -14,6 +14,7 @@ export default function LoginButton({
 
     await fetch("/api/auth/logout", {
       method: "POST",
+      credentials: "include",
     });
 
     window.location.href = "/";

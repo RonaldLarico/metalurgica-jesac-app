@@ -1,9 +1,11 @@
 import type { APIRoute } from "astro";
 
 export const POST: APIRoute = async ({ cookies }) => {
-  // Elimina la cookie de sesión
+  // Elimina la cookie de sesión en produccion y desarrollo
   cookies.delete("session", {
     path: "/",
+    sameSite: "lax",
+    secure: import.meta.env.PROD,
   });
 
   return new Response(
