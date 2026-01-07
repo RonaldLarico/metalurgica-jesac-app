@@ -88,16 +88,22 @@ const { pathname } = Astro.url;
             <>
               <a
                 href="/dashboard"
-                class="font-medium hover:text-(--color-secondary) transition"
+                class="font-medium text-(--color-primary) dark:text-(--color-secondary) hover:text-(--color-secondary) dark:hover:text-(--color-primary) transition"
               >
                 Dashboard
               </a>
 
               <a
                 href="/user"
-                class="font-medium hover:text-(--color-secondary) transition"
+                class="font-medium text-(--color-primary) dark:text-(--color-secondary) hover:text-(--color-secondary) dark:hover:text-(--color-primary) transition"
               >
                 Usuario
+              </a>
+              <a
+                href="/services"
+                class="font-medium text-(--color-primary) dark:text-(--color-secondary) hover:text-(--color-secondary) dark:hover:text-(--color-primary) transition"
+              >
+                Servicios
               </a>
             </>
           )
@@ -159,6 +165,12 @@ const { pathname } = Astro.url;
             </a>
             <a href="/user" class="mobile-link font-medium">
               Usuario
+            </a>
+            <a
+              href="/services"
+              class="mobile-link font-medium"
+            >
+              Servicios
             </a>
           </>
         )

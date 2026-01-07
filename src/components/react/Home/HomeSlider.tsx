@@ -17,10 +17,14 @@ export default function HomeSlider() {
   const [colHeight, setColHeight] = useState(0);
 
   useEffect(() => {
-    fetch("/api/image/listPublic")
+    fetch("/api/services/list-public")
       .then((res) => res.json())
-      .then((data: ImageFromAPI[]) => {
-        setImages(data.map((img) => img.url));
+      .then((data: any[]) => {
+        // Extraer todas las URLs de imágenes y aplanarlas en un solo array
+        const allImages = data.flatMap(service =>
+          service.images?.map((img: { id: string; url: string }) => img.url) || []
+        );
+        setImages(allImages);
       });
   }, []);
 

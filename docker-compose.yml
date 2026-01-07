@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jesac-web
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./prisma:/app/prisma           # Prisma migrations + SQLite
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: "file:/app/prisma/dev.db"
+    restart: unless-stopped

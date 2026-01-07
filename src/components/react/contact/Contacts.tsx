@@ -43,7 +43,7 @@ export default function ContactSection() {
             border border-(--color-primary)
             rounded-2xl
             shadow-xl
-            p-8 sm:p-12
+            p-3 sm:p-12
           "
         >
           {/* INFO */}
@@ -64,18 +64,18 @@ export default function ContactSection() {
             <ul className="space-y-6 text-slate-700 dark:text-slate-300">
               <li className="flex items-start gap-4">
                 <span
-                  className="w-10 h-10 flex items-center justify-center rounded-full
-                       bg-slate-100 dark:bg-slate-800
-                       text-(--color-primary)"
+                  className="shrink-0 w-10 h-10 flex items-center justify-center rounded-full
+                    bg-slate-100 dark:bg-slate-800
+                      text-(--color-primary)"
                 >
-                  ✉
+                  ✉️
                 </span>
                 <div className="space-y-1">
                   <p className="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">
                     Email
                   </p>
                   <p className="font-medium text-slate-800/70 dark:text-slate-100/90">
-                    consultas@metalurgicajesac.com
+                    operaciones@metalurgicajesac.com
                   </p>
                 </div>
               </li>

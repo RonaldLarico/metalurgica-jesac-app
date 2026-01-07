@@ -1,14 +1,38 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { miningCard, metalCard } from "../../../constants/service.data";
-import ServiceGrid from "./ServiceGrid";
 import { slideFromLeft } from "../../utils/motion";
+import ServiceGrid from "./ServiceGrid";
+
+interface ServiceItem {
+  id: number;
+  title: string;
+  category: string;
+  createdAt: string;
+  subtitles: { id: number; text: string }[];
+  images: { id: number; url: string }[];
+}
 
 export default function Services() {
+  const [services, setServices] = useState<ServiceItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const categories = [
+    { key: "mineria", title: "Servicios para minería", description: "Procesos metalúrgicos, plantas concentradoras y soluciones técnicas para operaciones mineras." },
+    { key: "metalmecanica", title: "Servicios para metalmecánica", description: "Fabricación y soporte metalmecánico especializado como complemento estratégico para la minería." },
+    { key: "otros", title: "Servicios en general", description: "Servicios complementarios y especializados que apoyan a diferentes industrias." }
+  ];
+
+  useEffect(() => {
+    fetch("/api/services/list-public")
+      .then(res => res.json())
+      .then((data: ServiceItem[]) => setServices(data))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <p className="text-center text-gray-500 dark:text-gray-400">Cargando servicios...</p>;
+
   return (
-    <section
-      id="services"
-      className="relative py-28 overflow-hidden"
-    >
+    <section id="services" className="relative py-28 overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-4 space-y-10">
         {/* HEADER */}
         <header className="max-w-4xl space-y-6">
@@ -66,26 +90,16 @@ export default function Services() {
           </motion.p>
         </header>
 
-        {/* SERVICIOS MINEROS */}
-        <section className="space-y-14">
-          <ServiceGrid
-            title="Servicios para minería"
-            description="Procesos metalúrgicos, plantas concentradoras y soluciones técnicas para operaciones mineras."
-            items={miningCard}
-          />
-        </section>
-
-        {/* DIVISOR */}
-        <div className="h-1 bg-linear-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent" />
-
-        {/* SERVICIOS METALMECÁNICOS */}
-        <section className="space-y-14">
-          <ServiceGrid
-            title="Servicios para metalmecánica"
-            description="Fabricación y soporte metalmecánico especializado como complemento estratégico para la minería."
-            items={metalCard}
-          />
-        </section>
+        {/* SERVICES BY CATEGORY */}
+        {categories.map((cat, index) => (
+          <section key={index} className="space-y-14 text-4xl">
+            <ServiceGrid
+              title={cat.title}
+              description={cat.description}
+              items={services.filter(s => s.category?.toLowerCase() === cat.key.toLowerCase())}
+            />
+          </section>
+        ))}
       </div>
     </section>
   );

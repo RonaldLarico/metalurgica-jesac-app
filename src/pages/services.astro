@@ -1,0 +1,37 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { getUserId } from "../../lib/auth";
+import ServiceBadgeButtons from "../components/react/service/ServiceBadgeButtons";
+
+const userId = getUserId(Astro.cookies);
+
+if (!userId) {
+  return Astro.redirect("/login");
+}
+---
+
+<MainLayout title="Panel">
+  <section
+    class="max-w-6xl mx-auto py-20 px-2
+      text-slate-900 dark:text-slate-100"
+  >
+    <header class="mb-10 space-y-2">
+      <h1
+        class="text-3xl font-semibold tracking-tight
+          text-(--color-primary)"
+      >
+        Panel de servicios
+      </h1>
+
+      <div class="h-px w-full
+          bg-(--color-secondary)/60"></div>
+    </header>
+
+    <div
+      class="border border-(--card-border)
+        p-2"
+    >
+      <ServiceBadgeButtons client:load />
+    </div>
+  </section>
+</MainLayout>

@@ -43,7 +43,7 @@ export default function GalleryModal({
             transition={{ duration: 0.3 }}
             onClick={(e) => e.stopPropagation()}
             className="
-              relative
+              relative mt-0 sm:mt-20
               max-w-[92vw] sm:max-w-[90vw]
               max-h-[85vh]
               flex items-center justify-center

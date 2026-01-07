@@ -1,5 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import PrismaPkg from "@prisma/client";
 import { PrismaLibSql } from "@prisma/adapter-libsql";
+
+const { PrismaClient } = PrismaPkg;
 
 export const prisma = new PrismaClient({
   adapter: new PrismaLibSql({

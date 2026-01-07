@@ -32,7 +32,7 @@ export const homeHeroData = {
 
   stats: [
     {
-      value: "5+ años",
+      value: "10+ años",
       label: "de experiencia",
     },
     {

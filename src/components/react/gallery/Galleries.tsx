@@ -124,7 +124,14 @@ export default function Gallery() {
 
         {/* BOTÓN VER MÁS */}
         {!showAll && images.length > limit && (
-          <div className="flex justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 80 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.08 }}
+            viewport={{ once: true, amount: 0.4 }}
+            whileHover={{ y: -8 }}
+            className="flex justify-center"
+          >
             <button
               onClick={() => setShowAll(true)}
               className="
@@ -137,7 +144,7 @@ export default function Gallery() {
             >
               Ver más…
             </button>
-          </div>
+          </motion.div>
         )}
       </div>
 

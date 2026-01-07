@@ -12,7 +12,6 @@ datasource db {
   provider = "sqlite"
 }
 
-
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
@@ -31,4 +30,36 @@ model Image {
   createdAt DateTime @default(now())
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
+}
+
+model Service {
+  id          Int               @id @default(autoincrement())
+  title       String
+  category    String?
+  createdAt   DateTime          @default(now())
+
+  subtitles   ServiceSubtitle[]
+  images      ServiceImage[]
+}
+
+model ServiceSubtitle {
+  id        Int     @id @default(autoincrement())
+  text      String
+  order     Int?
+
+  serviceId Int
+  service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+}
+
+model ServiceImage {
+  id        Int      @id @default(autoincrement())
+  url       String
+  size      Int?
+  width     Int?
+  height    Int?
+  format    String?
+  createdAt DateTime @default(now())
+
+  serviceId Int
+  service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
 }
