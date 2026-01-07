@@ -38,10 +38,9 @@ jobs:
       # 5️⃣ Crear .env en el servidor (NO en GitHub)
       - name: Create .env on server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cat > ~/jesac-web/.env << 'EOT'
-      DATABASE_URL=${{ secrets.DATABASE_URL }}
-      NODE_ENV=production
-      EOT"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << EOF
+          printf "DATABASE_URL=%s\nNODE_ENV=production\n" "${{ secrets.DATABASE_URL }}" > ~/jesac-web/.env
+          EOF
 
 
       # 6️⃣ Levantar Docker en el servidor
