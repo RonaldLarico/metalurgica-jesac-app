@@ -21,6 +21,7 @@ export const POST: APIRoute = async ({ cookies }) => {
     status: 200,
     headers: {
       "Content-Type": "application/json",
+      "Set-Cookie": `session=; Path=/; HttpOnly; Secure; Max-Age=0; SameSite=Lax`,
     },
   });
 };
