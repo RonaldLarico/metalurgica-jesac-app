@@ -39,7 +39,8 @@ jobs:
       - name: Create .env on server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << EOF
-          printf "DATABASE_URL=%s\nNODE_ENV=production\n" "${{ secrets.DATABASE_URL }}" > ~/jesac-web/.env
+            mkdir -p ~/jesac-web
+            printf "DATABASE_URL=%s\nNODE_ENV=production\n" "${{ secrets.DATABASE_URL }}" > ~/jesac-web/.env
           EOF
 
 
