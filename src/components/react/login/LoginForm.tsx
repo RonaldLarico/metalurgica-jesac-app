@@ -72,7 +72,7 @@ export default function LoginForm({
 
       setTimeout(() => {
         onSuccess?.();
-        window.location.href = "/dashboard";
+        window.location.href = "/gallery";
       }, 800);
     } catch {
       setMessage({
