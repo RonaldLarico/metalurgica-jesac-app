@@ -23,12 +23,13 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   }
 
   const maxAge = 60 * 60 * 8;
+  const isProd = import.meta.env.PROD;
 
   cookies.set("session", String(user.id), {
     path: "/",
-    sameSite: "lax",
-    secure: import.meta.env.PROD,
-    domain: ".metalurgicajesac.com",
+    sameSite: isProd ? "none" : "lax",
+    secure: isProd,
+    ...(isProd && { domain: ".metalurgicajesac.com" }),
     httpOnly: true,
     maxAge,
   });

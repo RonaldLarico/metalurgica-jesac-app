@@ -1,27 +1,19 @@
 import type { APIRoute } from "astro";
 
 export const POST: APIRoute = async ({ cookies }) => {
-  // Elimina la cookie de sesión en produccion y desarrollo
-  cookies.delete("session", {
+  const isProd = import.meta.env.PROD;
+
+  cookies.set("session", "", {
     path: "/",
-    sameSite: "lax",
-    secure: import.meta.env.PROD,
-    domain: ".metalurgicajesac.com",
+    sameSite: isProd ? "none" : "lax",
+    secure: isProd,
+    ...(isProd && { domain: ".metalurgicajesac.com" }),
     httpOnly: true,
-  });
-  cookies.delete("session", {
-    path: "/",
-    sameSite: "lax",
-    secure: import.meta.env.PROD,
-    domain: "www.metalurgicajesac.com",
-    httpOnly: true,
+    maxAge: 0,
   });
 
   return new Response(JSON.stringify({ ok: true }), {
     status: 200,
-    headers: {
-      "Content-Type": "application/json",
-      "Set-Cookie": `session=; Path=/; HttpOnly; Secure; Max-Age=0; SameSite=Lax`,
-    },
+    headers: { "Content-Type": "application/json" },
   });
 };
