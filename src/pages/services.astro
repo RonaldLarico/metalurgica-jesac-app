@@ -3,10 +3,12 @@ import MainLayout from "../layouts/MainLayout.astro";
 import { getUserId } from "../../lib/auth";
 import ServiceBadgeButtons from "../components/react/service/ServiceBadgeButtons";
 
+export const prerender = false;
+
 const userId = getUserId(Astro.cookies);
 
 if (!userId) {
-  return Astro.redirect("/login");
+  return Astro.redirect("/?loginRequired=1");
 }
 ---
 

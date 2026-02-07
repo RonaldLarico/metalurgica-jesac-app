@@ -2,10 +2,10 @@ import { useState } from "react";
 import CreateServiceForm from "./CreateServiceForm"; // tu componente hijo
 import ServiceListView from "./ServiceListView";
 
-type ActiveView = "view" | "create" | "update" | "delete";
+type ActiveView = "create" | "view" | "update" | "delete";
 
 export default function ServiceBadgeButtons() {
-  const [active, setActive] = useState<ActiveView>("view");
+  const [active, setActive] = useState<ActiveView>("create");
 
   const buttons: { label: string; view: ActiveView }[] = [
     { label: "Crear", view: "create" },

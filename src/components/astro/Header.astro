@@ -3,6 +3,7 @@ import { getUserId } from "../../../lib/auth";
 import DarkModeToggle from "../react/DarkMode/DarkModeToggle";
 import LoginButton from "../react/login/LoginButton";
 
+const { loginRequired = false } = Astro.props;
 const userId = getUserId(Astro.cookies);
 const isAuthenticated = Boolean(userId);
 
@@ -87,10 +88,10 @@ const { pathname } = Astro.url;
           isAuthenticated && (
             <>
               <a
-                href="/dashboard"
+                href="/gallery"
                 class="font-medium text-(--color-primary) dark:text-(--color-secondary) hover:text-(--color-secondary) dark:hover:text-(--color-primary) transition"
               >
-                Dashboard
+                Galeria
               </a>
 
               <a
@@ -113,7 +114,7 @@ const { pathname } = Astro.url;
           class="flex items-center gap-5 pl-6 border-l border-(--color-primary)/60 dark:border-(--color-secondary)/60"
         >
           <DarkModeToggle client:load />
-          <LoginButton client:load isAuthenticated={isAuthenticated} />
+          <LoginButton client:load isAuthenticated={isAuthenticated} openByDefault={loginRequired} />
         </div>
       </nav>
 
@@ -160,8 +161,8 @@ const { pathname } = Astro.url;
       {
         isAuthenticated && (
           <>
-            <a href="/dashboard" class="mobile-link font-medium">
-              Dashboard
+            <a href="/gallery" class="mobile-link font-medium">
+             Galeria
             </a>
             <a href="/user" class="mobile-link font-medium">
               Usuario
@@ -179,7 +180,7 @@ const { pathname } = Astro.url;
       <div
         class="flex items-center justify-center gap-5 pt-5 border-t border-slate-400 dark:border-slate-500"
       >
-        <LoginButton client:load isAuthenticated={isAuthenticated} />
+        <LoginButton client:load isAuthenticated={isAuthenticated} openByDefault={loginRequired} />
       </div>
     </nav>
   </header>

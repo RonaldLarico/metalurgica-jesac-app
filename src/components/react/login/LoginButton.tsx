@@ -3,10 +3,12 @@ import LoginModal from "./LoginModal";
 
 export default function LoginButton({
   isAuthenticated,
+  openByDefault = false,
 }: {
   isAuthenticated: boolean;
+  openByDefault?: boolean;
 }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(openByDefault);
   const [loading, setLoading] = useState(false);
 
   async function handleLogout() {

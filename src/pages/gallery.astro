@@ -6,7 +6,7 @@ import { getUserId } from "../../lib/auth";
 const userId = getUserId(Astro.cookies);
 
 if (!userId) {
-  return Astro.redirect("/login");
+  return Astro.redirect("/?loginRequired=1");
 }
 ---
 
@@ -20,7 +20,7 @@ if (!userId) {
         class="text-3xl font-semibold tracking-tight
           text-(--color-primary)"
       >
-        Panel de imagenes
+       Imagenes de galeria
       </h1>
 
       <div class="h-px w-16

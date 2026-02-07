@@ -12,6 +12,8 @@ interface Props {
 }
 
 const { title = "Metalúrgica - Jesac" } = Astro.props;
+
+const loginRequired = Astro.url.searchParams.get("loginRequired") === "1";
 ---
 
 <!doctype html>
@@ -37,7 +39,7 @@ const { title = "Metalúrgica - Jesac" } = Astro.props;
            transition-colors duration-300"
   >
     <!-- Header -->
-    <Header />
+    <Header loginRequired={loginRequired}/>
 
     <!-- Contenido -->
     <div class="relative bg-landing">

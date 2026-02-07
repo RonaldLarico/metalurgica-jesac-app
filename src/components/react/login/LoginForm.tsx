@@ -1,4 +1,5 @@
 import { useState } from "react";
+import EyeIcon from "../../../icons/PasswordIcon";
 
 type Message = {
   type: "error" | "success";
@@ -14,8 +15,14 @@ export default function LoginForm({
 }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<Message | null>(null);
+
+  const loginRequired =
+    typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search).get("loginRequired")
+      : null;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -79,6 +86,21 @@ export default function LoginForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
+      {loginRequired === "1" && (
+        <div
+          className="rounded-xl border border-amber-300/40
+    bg-amber-50/80 dark:bg-amber-950/30
+    px-5 py-4 text-sm
+    text-amber-800 dark:text-amber-200
+    shadow-sm"
+        >
+          <p className="font-semibold">Acceso restringido</p>
+
+          <p className="mt-2 text-xs">
+            Debes iniciar sesión para acceder a esta sección.
+          </p>
+        </div>
+      )}
       {/* MENSAJE */}
       {message && (
         <div
@@ -114,10 +136,11 @@ export default function LoginForm({
       />
 
       {/* PASSWORD */}
-      <input
-        type="password"
-        placeholder="Contraseña"
-        className="
+      <div className="relative">
+        <input
+          type={showPassword ? "text" : "password"}
+          placeholder="Contraseña"
+          className="
           w-full px-4 py-3
           bg-gray-100 dark:bg-[#0f2538]
           border border-(--card-border)
@@ -127,9 +150,17 @@ export default function LoginForm({
           focus:ring-(--color-primary)/40
           transition
         "
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button
+          type="button"
+          onClick={() => setShowPassword((v) => !v)}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-(--color-primary)"
+        >
+          <EyeIcon open={showPassword} className="w-5 h-5" />
+        </button>
+      </div>
 
       {/* BOTÓN */}
       <button
