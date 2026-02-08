@@ -13,7 +13,7 @@ export default function LoginModal({
   const [visible, setVisible] = useState(false);
   const [mode, setMode] = useState<"login" | "register">("login");
   const [openedFromUrl, setOpenedFromUrl] = useState(false);
-  const [mounted, setMounted] = useState(false);  
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -23,20 +23,27 @@ export default function LoginModal({
     const dialog = dialogRef.current;
     if (!dialog) return;
 
-    // Revisar si la URL tiene loginRequired
-    if (window.location.search.includes("loginRequired=1")) {
+    const openFromUrl = window.location.search.includes("loginRequired=1");
+    if (openFromUrl) {
       setOpenedFromUrl(true);
-      requestAnimationFrame(() => {
+
+      // Retraso seguro para asegurarnos que todo está renderizado
+      setTimeout(() => {
         if (!dialog.open) {
           dialog.showModal();
-          requestAnimationFrame(() => setVisible(true));
+          setVisible(true);
         }
-      });
+      }, 5000); // 500ms es suficiente en producción para que el DOM esté listo
     }
 
+    // Si el modal se abre desde un botón
     if (open && !dialog.open) {
-      dialog.showModal();
-      requestAnimationFrame(() => setVisible(true));
+      setTimeout(() => {
+        if (!dialog.open) {
+          dialog.showModal();
+          setVisible(true);
+        }
+      }, 500);
     }
   }, [open, mounted]);
 
