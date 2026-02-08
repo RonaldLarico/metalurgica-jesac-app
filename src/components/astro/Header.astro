@@ -228,8 +228,8 @@ function isActiveLink(href: string) {
 
     function scrollToElement(el: HTMLElement) {
       const delay = window.matchMedia("(min-width: 1367px)").matches
-        ? 200
-        : 700;
+        ? 300
+        : 800;
       setTimeout(() => {
         const headerHeight = header?.clientHeight || 0;
         const elementPosition = el.getBoundingClientRect().top + window.scrollY;
