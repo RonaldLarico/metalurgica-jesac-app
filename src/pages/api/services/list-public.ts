@@ -10,6 +10,7 @@ export const GET: APIRoute = async () => {
           orderBy: { order: "desc" },
         },
         images: true,
+        blogs: true,
       },
     });
 

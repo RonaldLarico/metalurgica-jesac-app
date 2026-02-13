@@ -4,7 +4,6 @@ import { getUserId } from "../lib/auth";
 export const onRequest = defineMiddleware((context, next) => {
   const { pathname, origin } = context.url;
 
-  // Lista completa de rutas válidas
   const validRoutes = [
     "/", 
     "/#service",
@@ -23,7 +22,6 @@ export const onRequest = defineMiddleware((context, next) => {
     return Response.redirect(`${origin}/404`, 302);
   }
 
-  // Rutas protegidas
   const protectedRoutes = ["/services", "/gallery", "/user"];
   const isProtected = protectedRoutes.some((route) => pathname.startsWith(route));
 

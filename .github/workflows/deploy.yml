@@ -10,24 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Clonar repositorio
+      # Clonar repositorio
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2️⃣ Configurar SSH
+      # Configurar SSH
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.7.0
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
-      # 3️⃣ Crear carpeta de deploy si no existe
+      # Crear carpeta de deploy si no existe
       - name: Create deploy directory
         run: |
           ssh -o StrictHostKeyChecking=no \
           ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} \
           "mkdir -p ~/jesac-web"
 
-      # 4️⃣ Sincronizar archivos al servidor
+      # Sincronizar archivos al servidor
       - name: Sync files to server
         run: |
           rsync -avz --delete \
@@ -35,16 +35,18 @@ jobs:
           --exclude '.env' \
           ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:~/jesac-web/
 
-      # 5️⃣ Crear .env en el servidor (NO en GitHub)
+      # Crear .env en el servidor (NO en GitHub)
       - name: Create .env on server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << EOF
             mkdir -p ~/jesac-web
-            printf "DATABASE_URL=%s\nNODE_ENV=production\n" "${{ secrets.DATABASE_URL }}" > ~/jesac-web/.env
+            printf "DATABASE_URL=%s\nNODE_ENV=production\nGEMINI_API_KEY=%s\n" \
+            "${{ secrets.DATABASE_URL }}" \
+            "${{ secrets.GEMINI_API_KEY }}" \
+            > ~/jesac-web/.env
           EOF
 
-
-      # 6️⃣ Levantar Docker en el servidor
+      # Levantar Docker en el servidor
       - name: Deploy Docker
         run: |
           ssh -o StrictHostKeyChecking=no \

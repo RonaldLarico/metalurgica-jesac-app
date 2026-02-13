@@ -11,7 +11,7 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 registerPlugin(
   FilePondPluginImagePreview,
   FilePondPluginFileValidateType,
-  FilePondPluginFileValidateSize
+  FilePondPluginFileValidateSize,
 );
 
 export default function CreateServiceForm() {
@@ -89,8 +89,6 @@ export default function CreateServiceForm() {
       <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
         Crear Servicio
       </h2>
-
-      {/* Title */}
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
           Nombre de servicio
@@ -102,8 +100,6 @@ export default function CreateServiceForm() {
           required
         />
       </div>
-
-      {/* Category (obligatorio) */}
       <div className="w-full">
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
           Categoría
@@ -122,7 +118,6 @@ export default function CreateServiceForm() {
             <option value="metalmecanica">metalmecanica</option>
             <option value="otros">otros</option>
           </select>
-          {/* Icono de flecha hacia abajo */}
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
             <svg
               className="w-5 h-5 text-gray-400 dark:text-gray-300"
@@ -208,20 +203,18 @@ export default function CreateServiceForm() {
           credits={false}
         />
       </div>
-
-      {/* Feedback */}
       {error && <p className="text-sm text-red-600">{error}</p>}
       {success && (
-        <p className="text-sm text-green-600">Servicio creado correctamente</p>
+        <p className="uppercase font-semibold text-green-400">
+          Servicio creado correctamente!
+        </p>
       )}
-
-      {/* Submit */}
       <button
         type="submit"
         disabled={loading}
         className="w-full py-3 rounded-lg bg-green-600 text-white font-semibold shadow-md hover:bg-green-700 transition-all disabled:opacity-50 cursor-pointer"
       >
-        {loading ? "Guardando..." : "Crear Servicio"}
+        {loading ? "Creando Servicio y blog..." : "Crear Servicio"}
       </button>
     </form>
   );

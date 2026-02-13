@@ -11,7 +11,7 @@ export default function ImageActionsButtons({
   const [loadingUpdate, setLoadingUpdate] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false); // Modal de confirmación
 
-  // 🔹 Eliminar imagen
+  // Eliminar imagen
   const handleDelete = async () => {
     setLoadingDelete(true);
 
@@ -34,7 +34,7 @@ export default function ImageActionsButtons({
     }
   };
 
-  // 🔹 Actualizar imagen
+  // Actualizar imagen
   const handleUpdate = async () => {
     const fileInput = document.createElement("input");
     fileInput.type = "file";
@@ -61,7 +61,15 @@ export default function ImageActionsButtons({
         }
 
         const data = await res.json();
-        if (onUpdated) onUpdated(data.url);
+        if (onUpdated)
+          onUpdated(
+            data.url,
+            data.name,
+            data.size,
+            data.width,
+            data.height,
+            data.format,
+          );
       } catch (err: any) {
         alert(err.message || "Error inesperado");
       } finally {
@@ -96,9 +104,12 @@ export default function ImageActionsButtons({
       {showConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300">
           <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 flex flex-col items-center">
-            <h2 className="text-lg font-semibold mb-4 text-gray-900">Confirmar eliminación</h2>
+            <h2 className="text-lg font-semibold mb-4 text-gray-900">
+              Confirmar eliminación
+            </h2>
             <p className="text-gray-700 mb-6 text-center">
-              ¿Estás seguro que deseas eliminar esta imagen? Esta acción no se puede deshacer.
+              ¿Estás seguro que deseas eliminar esta imagen? Esta acción no se
+              puede deshacer.
             </p>
 
             <div className="flex gap-3">

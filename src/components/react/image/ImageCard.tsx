@@ -1,8 +1,8 @@
 import { useState } from "react";
 import type { Image } from "./types";
-import Modal from "../DarkMode/Modal";
-import ActionButton from "../DarkMode/Button";
-import ConfirmModal from "../DarkMode/ConfirmModal";
+import Modal from "../common/Modal";
+import ActionButton from "../common/Button";
+import ConfirmModal from "../common/ConfirmModal";
 
 function formatBytes(bytes: number) {
   if (!bytes) return "";

@@ -1,6 +1,6 @@
 ---
 import { getUserId } from "../../../lib/auth";
-import DarkModeToggle from "../react/DarkMode/DarkModeToggle";
+import DarkModeToggle from "../react/common/DarkModeToggle";
 import LoginButton from "../react/login/LoginButton";
 
 const { loginRequired = false } = Astro.props;
@@ -228,8 +228,8 @@ function isActiveLink(href: string) {
 
     function scrollToElement(el: HTMLElement) {
       const delay = window.matchMedia("(min-width: 1367px)").matches
-        ? 300
-        : 800;
+        ? 500
+        : 1000;                                                        
       setTimeout(() => {
         const headerHeight = header?.clientHeight || 0;
         const elementPosition = el.getBoundingClientRect().top + window.scrollY;

@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { prisma } from "../../../../lib/db.server";
+import { autoCreateBlog } from "../../../lib/blog/autoCreateBlog";
 
 export const POST: APIRoute = async ({ request, cookies }) => {
   const session = cookies.get("session")?.value;
@@ -14,7 +15,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   }
 
   try {
-    const service = await prisma.service.create({
+    const newService = await prisma.service.create({
       data: {
         title,
         category,
@@ -30,6 +31,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
           ? {
               create: images.map((img: any) => ({
                 url: img.url,
+                name: img.name ?? null,
                 size: img.size ?? null,
                 width: img.width ?? null,
                 height: img.height ?? null,
@@ -43,11 +45,19 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         subtitles: true,
       },
     });
-    console.log("REQUEST BODY:", { title, subtitles, images });
+    /* console.log("REQUEST BODY:", { title, subtitles, images }); */
+    // Crear Blog (internamente llamando endpoint)
+    const blog = await autoCreateBlog(newService.id);
 
-    return new Response(JSON.stringify(service), {
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({
+        service: newService,
+        blog: blog,
+      }),
+      {
+        headers: { "Content-Type": "application/json" },
+      },
+    );
   } catch (err) {
     console.error("💥 ERROR CREATE SERVICE:", err);
     return new Response("Error al crear el servicio", { status: 500 });

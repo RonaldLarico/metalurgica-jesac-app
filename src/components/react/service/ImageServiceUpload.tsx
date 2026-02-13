@@ -1,4 +1,4 @@
-import { useState } from "react";
+/* import { useState } from "react";
 import { FilePond, registerPlugin } from "react-filepond";
 
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
@@ -69,7 +69,7 @@ export default function ImageUpload({ onUploaded }: Props) {
           setError(null);
         }}
 
-        /* ⚠️ WARNINGS CORRECTOS */
+        // WARNINGS CORRECTOS 
         onwarning={(errorCode: any) => {
           switch (errorCode) {
             case "MAX_FILES_EXCEEDED":
@@ -94,3 +94,4 @@ export default function ImageUpload({ onUploaded }: Props) {
     </div>
   );
 }
+ */

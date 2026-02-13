@@ -25,7 +25,7 @@ COPY . .
 # Build Astro SSR
 RUN pnpm run build
 
-# 👉 AGREGADO: Prisma generate
+# AGREGADO: Prisma generate
 RUN pnpm prisma generate
 
 
@@ -58,4 +58,5 @@ ENV NODE_ENV=production
 EXPOSE 3000
 
 # 👉 AGREGADO: Prisma migrate deploy antes de arrancar el server
-CMD ["sh", "-c", "pnpm prisma migrate deploy && node dist/server/entry.mjs"]
+#CMD ["sh", "-c", "pnpm prisma migrate deploy && node dist/server/entry.mjs"]
+CMD ["node", "dist/server/entry.mjs"]

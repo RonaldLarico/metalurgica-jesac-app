@@ -1,7 +1,6 @@
-import Modal from "../DarkMode/Modal";
-import ActionButton from "../DarkMode/Button";
+import Modal from "./Modal";
+import ActionButton from "./Button";
 
-// Modal de confirmación reutilizable
 export default function ConfirmModal({
   open,
   message,

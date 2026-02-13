@@ -45,7 +45,7 @@ export default function LoginButton({
     );
   }
 
-  // 👉 NO AUTENTICADO → LOGIN
+  // NO AUTENTICADO → LOGIN
   return (
     <>
       <button

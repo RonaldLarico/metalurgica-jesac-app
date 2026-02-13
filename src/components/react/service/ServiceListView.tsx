@@ -70,8 +70,8 @@ export default function ServiceListView() {
                       prev.map((s) =>
                         s.id === service.id
                           ? { ...s, title: newTitle, category: newCategory }
-                          : s
-                      )
+                          : s,
+                      ),
                     );
                   }}
                 />
@@ -130,11 +130,11 @@ export default function ServiceListView() {
                                       subtitles: s.subtitles.map((st) =>
                                         st.id === sub.id
                                           ? { ...st, text: newText }
-                                          : st
+                                          : st,
                                       ),
                                     }
-                                  : s
-                              )
+                                  : s,
+                              ),
                             );
                           }}
                         />
@@ -149,11 +149,11 @@ export default function ServiceListView() {
                                   ? {
                                       ...s,
                                       subtitles: s.subtitles.filter(
-                                        (st) => st.id !== sub.id
+                                        (st) => st.id !== sub.id,
                                       ),
                                     }
-                                  : s
-                              )
+                                  : s,
+                              ),
                             );
                           }}
                         />
@@ -172,8 +172,8 @@ export default function ServiceListView() {
                   prev.map((s) =>
                     s.id === service.id
                       ? { ...s, subtitles: [...s.subtitles, newSubtitle] }
-                      : s
-                  )
+                      : s,
+                  ),
                 );
               }}
             />
@@ -218,14 +218,30 @@ export default function ServiceListView() {
             >
               X
             </button>
-
+            <h2 className="text-lg font-semibold text-lime-900 mb-3 truncate w-full text-center">
+              {selectedImage.name}.{selectedImage.format}
+            </h2>
             {/* Imagen */}
-            <img
-              src={selectedImage.url}
-              alt="Vista previa"
-              className="w-full h-auto max-h-[70vh] object-contain rounded-lg shadow-md"
-            />
-
+            <div className="relative w-full">
+              <img
+                src={selectedImage.url}
+                alt="Vista previa"
+                className="w-full h-auto max-h-[70vh] object-contain rounded-lg shadow-md"
+              />
+              {/* Información de la imagen */}
+              <div className="absolute bottom-2 left-0 right-0 px-3 flex justify-between text-xs text-white font-medium bg-black/30 rounded-md py-1">
+                <div>
+                  {selectedImage.size != null
+                    ? `${(selectedImage.size / 1024).toFixed(2)} KB`
+                    : "-"}{" "}
+                </div>
+                <div>
+                  {selectedImage.width && selectedImage.height
+                    ? `${selectedImage.width}x${selectedImage.height}`
+                    : "-"}
+                </div>
+              </div>
+            </div>
             {/* Botones de acción */}
             <ImageActionsButtons
               imageId={selectedImage.id}
@@ -234,9 +250,26 @@ export default function ServiceListView() {
                 setSelectedImage(null);
                 fetchServices();
               }}
-              onUpdated={(newUrl) => {
+              onUpdated={(
+                newUrl,
+                newName,
+                newSize,
+                newHeight,
+                newWidth,
+                newFormat,
+              ) => {
                 setSelectedImage((prev) =>
-                  prev ? { ...prev, url: newUrl } : null
+                  prev
+                    ? {
+                        ...prev,
+                        url: newUrl,
+                        name: newName,
+                        size: newSize,
+                        width: newWidth,
+                        height: newHeight,
+                        format: newFormat,
+                      }
+                    : null,
                 );
                 fetchServices();
               }}

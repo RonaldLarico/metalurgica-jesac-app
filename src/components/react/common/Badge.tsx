@@ -1,12 +1,11 @@
-// components/ui/Badge.tsx
 import React from "react";
 
 interface BadgeProps {
   imgUrl?: string;
-  size?: number;          // Tamaño del badge en px
-  borderColor?: string;   // Color del borde
-  bgColor?: string;       // Color de fondo
-  className?: string;     // Clases adicionales
+  size?: number;
+  borderColor?: string;
+  bgColor?: string;
+  className?: string;
 }
 
 export default function Badge({

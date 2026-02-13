@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { newFeatures, startingFeatures } from "../../../constants/about.data";
 import { slideFromLeft, slideFromRight } from "../../utils/motion";
-import Badge from "../DarkMode/Badge";
+import Badge from "../common/Badge";
 
 export default function AboutUs() {
   return (

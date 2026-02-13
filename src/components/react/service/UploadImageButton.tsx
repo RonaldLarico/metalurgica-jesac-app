@@ -27,7 +27,7 @@ export default function UploadImageButton({
     try {
       const formData = new FormData();
       formData.append("serviceId", String(serviceId));
-      selectedFiles.forEach((file) => formData.append("image", file));
+      selectedFiles.forEach((file) => {formData.append("image", file, file.name)});
 
       const res = await fetch("/api/services/create-image", {
         method: "POST",

@@ -9,9 +9,10 @@ import "leaflet/dist/leaflet.css";
 
 interface Props {
   title?: string;
+  description?: string;
 }
 
-const { title = "Metalúrgica - Jesac" } = Astro.props;
+const { title = "Metalúrgica - Jesac", description } = Astro.props;
 
 const loginRequired = Astro.url.searchParams.get("loginRequired") === "1";
 ---
@@ -22,6 +23,8 @@ const loginRequired = Astro.url.searchParams.get("loginRequired") === "1";
     <ThemeScript />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description || ""} />
+    <meta property="og:description" content={description || ""} />
 
     <title>{title}</title>
 
@@ -34,12 +37,10 @@ const loginRequired = Astro.url.searchParams.get("loginRequired") === "1";
     <link rel="stylesheet" href="/src/styles/global.css" />
   </head>
 
-  <body
-    class="min-h-screen
-           transition-colors duration-300"
-  >
+  <body class="min-h-screen
+           transition-colors duration-300">
     <!-- Header -->
-    <Header loginRequired={loginRequired}/>
+    <Header loginRequired={loginRequired} />
 
     <!-- Contenido -->
     <div class="relative bg-landing">

@@ -118,7 +118,7 @@ export default function Hero() {
               <div className="flex flex-wrap gap-8 md:gap-20">
                 {stats.map((stat) => (
                   <div key={stat.label} className="flex flex-col">
-                    <span className="text-2xl font-bold text-[#057ec4] dark:text-[#38bdf8]">
+                    <span className="text-2xl font-bold text-[#057ec4] dark:text-(--color-secondary)">
                       {stat.value}
                     </span>
                     <span className="text-xs uppercase text-slate-500 dark:text-slate-400">

@@ -35,19 +35,20 @@ export default function ImageUpload({ onUploaded }: Props) {
         name="image"
         files={files}
         onupdatefiles={setFiles}
-
         allowMultiple
         maxFiles={5}
-
-        acceptedFileTypes={["image/png", "image/jpeg", "image/webp", "video/mp4"]}
-        fileValidateTypeLabelExpectedTypes="Solo imágenes PNG, JPG, WEBP o videos MP4"
-
+        acceptedFileTypes={[
+          "image/png",
+          "image/jpeg",
+          "image/webp",
+          "video/mp4",
+          "image/gif",
+        ]}
+        fileValidateTypeLabelExpectedTypes="Solo imágenes PNG, JPG, WEBP, GIF o videos MP4"
         maxFileSize="100MB"
         labelMaxFileSizeExceeded="El archivo es muy pesado"
         labelMaxFileSize="Tamaño máximo: 100MB"
-
         labelIdle='Arrastra imágenes o <span class="filepond--label-action">haz click aquí</span>'
-
         server={{
           process: {
             url: "/api/image/upload",
@@ -62,14 +63,11 @@ export default function ImageUpload({ onUploaded }: Props) {
             },
           },
         }}
-
         onprocessfiles={() => {
           onUploaded?.();
           setFiles([]);
           setError(null);
         }}
-
-        /* ⚠️ WARNINGS CORRECTOS */
         onwarning={(errorCode: any) => {
           switch (errorCode) {
             case "MAX_FILES_EXCEEDED":
@@ -88,7 +86,6 @@ export default function ImageUpload({ onUploaded }: Props) {
               setError("Solo puedes subir un máximo de 5 imágenes.");
           }
         }}
-
         credits={false}
       />
     </div>

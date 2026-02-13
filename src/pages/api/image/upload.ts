@@ -3,8 +3,11 @@ import fs from "fs";
 import path from "path";
 import sharp from "sharp";
 import { prisma } from "../../../../lib/db.server";
+import { ensureMediaDir, MEDIA_DIRS } from "../../../lib/mediaPaths";
 
 export const POST: APIRoute = async ({ request, cookies }) => {
+  const type = "gallery";
+  ensureMediaDir(type);
   try {
     const userId = cookies.get("session")?.value;
     if (!userId) {
@@ -18,14 +21,12 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       return new Response("No files uploaded", { status: 400 });
     }
 
-    // 📁 Crear carpeta uploads si no existe
-    const uploadsDir = path.join(process.cwd(), "public/uploads");
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
-    }
-
     const savedFiles = [];
     const responseUrls: string[] = [];
+
+    const imageExts = [".png", ".jpg", ".jpeg", ".webp"];
+    const videoExts = [".mp4"];
+    const gifExts = [".gif"];
 
     for (const item of items) {
       if (!(item instanceof File)) continue;
@@ -37,53 +38,59 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       let publicUrl: string;
       let stats: fs.Stats;
 
-      // 🔹 Imagen: comprimir y convertir a WebP
-      if ([".png", ".jpg", ".jpeg", ".webp"].includes(extname)) {
+      const uploadDir = MEDIA_DIRS[type];
+      const originalName = path.parse(item.name).name;
+      const sanitizedOriginalName = originalName
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, "-");
+      const ext = extname.replace(".", "");
+      const extWebp = "webp";
+
+      if (imageExts.includes(extname)) {
         const outputBuffer = await sharp(originalBuffer)
           .resize({ width: 3000, withoutEnlargement: true })
           .webp({ quality: 92, effort: 4, smartSubsample: true })
           .toBuffer();
+        
+        fileName = `${Date.now()}-${sanitizedOriginalName}.${extWebp}`;
+        const filePath = path.join(uploadDir, fileName);
 
-        fileName = `${Date.now()}-${path.parse(item.name).name}.webp`;
-        const filePath = path.join(uploadsDir, fileName);
         fs.writeFileSync(filePath, outputBuffer);
-        publicUrl = `/uploads/${fileName}`;
+        publicUrl = `/api/media/${type}/${fileName}`;
         stats = fs.statSync(filePath);
 
         const metadata = await sharp(outputBuffer).metadata();
 
         savedFiles.push({
           url: publicUrl,
+          name: sanitizedOriginalName,
           size: stats.size,
           width: metadata.width,
           height: metadata.height,
           format: metadata.format,
           userId: Number(userId),
         });
-
         responseUrls.push(publicUrl);
-
-      // 🔹 Video MP4: subir tal cual, sin comprimir
-      } else if (extname === ".mp4") {
-        fileName = `${Date.now()}-${path.parse(item.name).name}.mp4`;
-        const filePath = path.join(uploadsDir, fileName);
+      } else if (videoExts.includes(extname) || gifExts.includes(extname)) {
+        fileName = `${Date.now()}-${sanitizedOriginalName}.${ext}`;
+        const filePath = path.join(uploadDir, fileName);
         fs.writeFileSync(filePath, originalBuffer);
-        publicUrl = `/uploads/${fileName}`;
+        publicUrl = `/api/media/${type}/${fileName}`;
         stats = fs.statSync(filePath);
 
         savedFiles.push({
           url: publicUrl,
+          name: sanitizedOriginalName,
           size: stats.size,
           width: null,
           height: null,
-          format: "mp4",
+          format: extname.replace(".", ""),
           userId: Number(userId),
         });
-
         responseUrls.push(publicUrl);
-
       } else {
-        continue; // Ignorar otros tipos de archivo
+        continue;
       }
     }
 
@@ -91,14 +98,12 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       return new Response("No valid files", { status: 400 });
     }
 
-    // 💾 Guardar archivos en la DB
+    // Guardar archivos en la DB
     await prisma.image.createMany({ data: savedFiles });
 
-    return new Response(
-      JSON.stringify({ ok: true, urls: responseUrls }),
-      { headers: { "Content-Type": "application/json" } }
-    );
-
+    return new Response(JSON.stringify({ ok: true, urls: responseUrls }), {
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (error) {
     console.error("UPLOAD ERROR:", error);
     return new Response("Internal Server Error", { status: 500 });

@@ -4,15 +4,15 @@
 import { useState } from "react";
 
 interface ServiceSubtitleFormProps {
-  serviceId: number; // Id del Service al que agregaremos el subtitle
-  onCreated?: (subtitle: { id: number; text: string }) => void; // Callback opcional después de crear
+  serviceId: number;
+  onCreated?: (subtitle: { id: number; text: string }) => void;
 }
 
 export default function ServiceSubtitleForm({ serviceId, onCreated }: ServiceSubtitleFormProps) {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [showForm, setShowForm] = useState(false); // Controla si se muestra el input
+  const [showForm, setShowForm] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

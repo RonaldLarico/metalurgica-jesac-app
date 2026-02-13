@@ -1,4 +1,4 @@
-import ImageCardSkeleton from "../DarkMode/ImageCardSkeleton";
+import ImageCardSkeleton from "../common/ImageCardSkeleton";
 import ImageCard from "./ImageCard";
 import type { Image } from "./types";
 

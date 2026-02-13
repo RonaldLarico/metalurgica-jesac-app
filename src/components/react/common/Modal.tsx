@@ -31,7 +31,6 @@ export default function Modal({ open, onClose, children }: ModalProps) {
           flex flex-col
         "
       >
-        {/* Header interno del modal */}
         <div className="flex justify-end p-1">
           <button
             onClick={onClose}
@@ -49,11 +48,7 @@ export default function Modal({ open, onClose, children }: ModalProps) {
             ✕
           </button>
         </div>
-
-        {/* Contenido */}
-        <div className="px-3 pb-3 overflow-auto">
-          {children}
-        </div>
+        <div className="px-3 pb-3 overflow-auto">{children}</div>
       </div>
     </div>
   );

@@ -23,6 +23,7 @@ model User {
 model Image {
   id        Int      @id @default(autoincrement())
   url       String
+  name      String?
   size      Int?
   width     Int?
   height    Int?
@@ -33,20 +34,19 @@ model Image {
 }
 
 model Service {
-  id          Int               @id @default(autoincrement())
-  title       String
-  category    String?
-  createdAt   DateTime          @default(now())
-
-  subtitles   ServiceSubtitle[]
-  images      ServiceImage[]
+  id        Int               @id @default(autoincrement())
+  title     String
+  category  String?
+  createdAt DateTime          @default(now())
+  subtitles ServiceSubtitle[]
+  images    ServiceImage[]
+  blogs     Blog[]
 }
 
 model ServiceSubtitle {
   id        Int     @id @default(autoincrement())
   text      String
   order     Int?
-
   serviceId Int
   service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
 }
@@ -54,12 +54,111 @@ model ServiceSubtitle {
 model ServiceImage {
   id        Int      @id @default(autoincrement())
   url       String
+  name      String?
   size      Int?
   width     Int?
   height    Int?
   format    String?
   createdAt DateTime @default(now())
-
   serviceId Int
   service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+}
+
+model Blog {
+  id          Int            @id @default(autoincrement())
+  slug        String         @unique
+  excerpt     String?
+  description String?
+  content     String?
+  published   Boolean        @default(false)
+  publishedAt DateTime       @default(now())
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  serviceId   Int            @unique
+  service     Service        @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  reactions   BlogReaction[]
+  comments    BlogComment[]
+  questions   Question[]
+}
+
+model Question {
+  id        Int      @id @default(autoincrement())
+  question  String
+  answer    String
+  blogId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  blog      Blog     @relation(fields: [blogId], references: [id], onDelete: Cascade)
+}
+
+model BlogReaction {
+  id        Int          @id @default(autoincrement())
+  type      ReactionType
+  blogId    Int
+  userId    Int?
+  ipAddress String?
+  createdAt DateTime     @default(now())
+  blog      Blog         @relation(fields: [blogId], references: [id], onDelete: Cascade)
+
+  @@unique([blogId, userId])
+  @@unique([blogId, ipAddress])
+}
+
+model BlogCommentReaction {
+  id        Int          @id @default(autoincrement())
+  type      ReactionType
+  commentId Int
+  userId    Int?
+  ipAddress String?
+  createdAt DateTime     @default(now())
+  comment   BlogComment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([commentId, userId])
+  @@unique([commentId, ipAddress])
+}
+
+model BlogComment {
+  id        Int                   @id @default(autoincrement())
+  content   String
+  blogId    Int
+  parentId  Int?
+  name      String
+  email     String?
+  approved  Boolean               @default(false)
+  createdAt DateTime              @default(now())
+  reactions BlogCommentReaction[]
+  blog      Blog                  @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  parent    BlogComment?          @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies   BlogComment[]         @relation("CommentReplies")
+}
+
+model ShareLog {
+  id        Int           @id @default(autoincrement())
+  type      ShareTarget
+  targetId  Int
+  platform  SharePlatform
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime      @default(now())
+}
+
+enum ShareTarget {
+  BLOG
+  SERVICE
+}
+
+enum SharePlatform {
+  WHATSAPP
+  TELEGRAM
+  FACEBOOK
+  LINKEDIN
+  X
+  COPY
+}
+
+enum ReactionType {
+  LIKE
+  DISLIKE
+  LOVE
+  WOW
 }

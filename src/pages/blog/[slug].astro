@@ -1,0 +1,55 @@
+---
+import BlogCard from "../../components/react/blog/BlogCard";
+import MainLayout from "../../layouts/MainLayout.astro";
+import type { Blog } from "@prisma/client";
+import { prisma } from "../../../lib/db.server";
+import "../../styles/global.css";
+
+const { slug } = Astro.params as { slug: string };
+
+const sessionCookie = Astro.cookies.get("session")?.value;
+
+let userId: number | undefined = undefined;
+
+if (sessionCookie) {
+  const parsed = Number(sessionCookie);
+  if (!isNaN(parsed)) {
+    userId = parsed;
+  }
+}
+
+const blog: (Blog & {
+  service: {
+    title: string;
+    category?: string | null;
+    subtitles: { id: number; text: string; order?: number | null }[];
+    images: { id: number; url: string; name?: string | null }[];
+  };
+}) | null = await prisma.blog.findUnique({
+  where: { slug },
+  include: {
+    service: {
+      include: {
+        subtitles: true,
+        images: true,
+      },
+    },
+  },
+});
+---
+
+<MainLayout
+  title={blog?.slug.replace(/-/g, " ") || "Blog"}
+  description={blog?.excerpt || ""}
+>
+  {
+    blog ? (
+      <div class="max-w-7xl mx-auto my-12 mt-24 sm:mt-32">
+        <BlogCard client:only="react" blog={blog} userId={userId} />
+        
+      </div>
+    ) : (
+      <p class="text-center text-gray-600">Blog no encontrado</p>
+    )
+  }
+</MainLayout>

@@ -1,6 +1,7 @@
 // types/service.ts
 export type ServiceImageInput = {
   filename: string;
+  name?: string;
   size?: number;
   width?: number;
   height?: number;
@@ -22,6 +23,7 @@ export interface ServiceSubtitle {
 export interface ServiceImage {
   id: number;
   url: string;
+  name?: string;
   size?: number | null;
   width?: number | null;
   height?: number | null;
@@ -32,7 +34,7 @@ export interface ServiceImage {
 export interface Service {
   id: number;
   title: string;
-  category: string,
+  category: string;
   createdAt: string;
   subtitles: ServiceSubtitle[];
   images: ServiceImage[];
@@ -55,7 +57,14 @@ export interface ImageActionsButtonsProps {
   imageId: number;
   currentUrl: string;
   onDeleted?: () => void;
-  onUpdated?: (newUrl: string) => void;
+  onUpdated?: (
+    newUrl: string,
+    newName: string,
+    newSize: number,
+    newHeight: number,
+    newWidth: number,
+    newFormat: string,
+  ) => void;
 }
 
 export interface ServiceItem {
@@ -65,6 +74,9 @@ export interface ServiceItem {
   createdAt: string;
   subtitles: { id: number; text: string }[];
   images: { id: number; url: string }[];
+  blogs?: {
+    slug: string;
+  }[];
 }
 
 export interface ServiceGridProps {
