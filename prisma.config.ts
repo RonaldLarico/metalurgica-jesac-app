@@ -1,5 +1,5 @@
 import { defineConfig } from "prisma/config";
-import type { PrismaConfig } from "prisma/config"; // ✅ import tipo-only
+import type { PrismaConfig } from "prisma/config";
 import path from "path";
 
 // Cargar dotenv solo en desarrollo
@@ -7,7 +7,6 @@ if (process.env.NODE_ENV !== "production") {
   try {
     const dotenv: typeof import("dotenv") = require("dotenv");
     dotenv.config({ path: path.resolve(process.cwd(), ".env") });
-    console.log("✅ Variables de entorno cargadas desde .env");
   } catch {
     console.warn("⚠️ dotenv no disponible, continuando...");
   }
