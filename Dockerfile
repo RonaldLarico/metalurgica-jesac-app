@@ -57,6 +57,6 @@ COPY --from=build /app/prisma.config.ts ./prisma.config.ts
 ENV NODE_ENV=production
 EXPOSE 3000
 
-# 👉 AGREGADO: Prisma migrate deploy antes de arrancar el server
+# AGREGADO: Prisma migrate deploy antes de arrancar el server
 #CMD ["sh", "-c", "pnpm prisma migrate deploy && node dist/server/entry.mjs"]
 CMD ["node", "dist/server/entry.mjs"]

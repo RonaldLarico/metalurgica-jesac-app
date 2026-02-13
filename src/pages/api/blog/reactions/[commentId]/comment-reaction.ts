@@ -21,7 +21,7 @@ export const POST: APIRoute = async ({ params, request, clientAddress }) => {
       );
     }
 
-    // 🔥 Obtener IP correctamente desde Astro
+    // Obtener IP correctamente desde Astro
     const ipAddress = clientAddress ?? null;
 
     if (!userId && !ipAddress) {
@@ -31,7 +31,7 @@ export const POST: APIRoute = async ({ params, request, clientAddress }) => {
       );
     }
 
-    // 1️⃣ Validar comentario
+    // Validar comentario
     const comment = await prisma.blogComment.findUnique({
       where: { id: commentId },
       select: { id: true },
@@ -45,10 +45,8 @@ export const POST: APIRoute = async ({ params, request, clientAddress }) => {
     }
 
     let reaction;
-
-    // =================================================
-    // 🔐 Usuario autenticado
-    // =================================================
+    
+    // Usuario autenticado
     if (userId) {
       reaction = await prisma.blogCommentReaction.upsert({
         where: {
@@ -66,10 +64,7 @@ export const POST: APIRoute = async ({ params, request, clientAddress }) => {
         },
       });
     }
-
-    // =================================================
-    // 🌐 Usuario anónimo
-    // =================================================
+    // Usuario anónimo
     else {
       reaction = await prisma.blogCommentReaction.upsert({
         where: {
