@@ -1,21 +1,15 @@
 # -------------------------
 # Etapa de build
 # -------------------------
-FROM node:22-alpine AS build
+FROM node:22-bullseye-slim AS build
 
 WORKDIR /app
 
 # Dependencias nativas necesarias
-RUN apk add --no-cache \
-    python3 \
-    g++ \
-    make \
-    git \
-    bash \
-    libc6-compat \
-    ca-certificates \
-    openssl \
-    && apk upgrade --no-cache
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 g++ make git bash openssl ca-certificates libc6-compat \
+    && apt-get upgrade -y \
+    && rm -rf /var/lib/apt/lists/*
 
 # pnpm
 RUN npm install -g pnpm@latest
@@ -39,17 +33,15 @@ RUN pnpm prisma generate
 # -------------------------
 # Etapa de producción
 # -------------------------
-FROM node:22-alpine AS production
+FROM node:22-bullseye-slim AS production
 
 WORKDIR /app
 
 # Dependencias runtime
-RUN apk add --no-cache \
-    bash \
-    openssl \
-    ffmpeg \
-    libc6-compat \
-    ca-certificates
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    openssl bash ffmpeg ca-certificates libc6-compat \
+    && apt-get upgrade -y \
+    && rm -rf /var/lib/apt/lists/*
 
 # pnpm
 RUN npm install -g pnpm@latest
