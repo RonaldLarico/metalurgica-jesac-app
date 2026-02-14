@@ -1,7 +1,7 @@
 # -------------------------
 # Etapa de build
 # -------------------------
-FROM node:22-bullseye-slim AS build
+FROM node:22-bullseye AS build
 
 WORKDIR /app
 
@@ -33,15 +33,18 @@ RUN pnpm prisma generate
 # -------------------------
 # Etapa de producción
 # -------------------------
-FROM node:22-bullseye-slim AS production
+FROM node:22-bullseye AS production
 
 WORKDIR /app
 
 # Dependencias runtime
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    openssl bash ffmpeg ca-certificates libc6-compat \
+    ffmpeg \
+    libavcodec-extra \
+    bash openssl ca-certificates libc6-compat \
     && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/*
+
 
 # pnpm
 RUN npm install -g pnpm@latest
