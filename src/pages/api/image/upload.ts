@@ -6,7 +6,7 @@ import ffmpeg from "fluent-ffmpeg";
 import { prisma } from "../../../../lib/db.server";
 import { ensureMediaDir, MEDIA_DIRS } from "../../../lib/mediaPaths";
 
-ffmpeg.setFfmpegPath("/usr/bin/ffmpeg");
+//ffmpeg.setFfmpegPath("/usr/bin/ffmpeg");
 
 export const POST: APIRoute = async ({ request, cookies }) => {
   const type = "gallery";
