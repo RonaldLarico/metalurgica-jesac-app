@@ -1,15 +1,12 @@
 # -------------------------
 # Etapa de build
 # -------------------------
-FROM node:22-bullseye AS build
+FROM node:22-alpine AS build
 
 WORKDIR /app
 
 # Dependencias nativas necesarias
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3 g++ make git bash openssl ca-certificates libc6-compat \
-    && apt-get upgrade -y \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache python3 g++ make git bash openssl ca-certificates libc6-compat curl
 
 # pnpm
 RUN npm install -g pnpm@latest
@@ -23,6 +20,9 @@ RUN pnpm install --frozen-lockfile --shamefully-hoist
 # Copia el proyecto
 COPY . .
 
+# Pre-cargar FFmpeg WASM en la build
+RUN node -e "const { createFFmpeg } = require('@ffmpeg/ffmpeg'); const ffmpeg = createFFmpeg({ log: true }); ffmpeg.load().then(() => console.log('FFmpeg WASM pre-cargado'));"
+
 # Build Astro SSR
 RUN pnpm run build
 
@@ -33,19 +33,14 @@ RUN pnpm prisma generate
 # -------------------------
 # Etapa de producción
 # -------------------------
-#FROM node:22-bullseye AS production
+FROM node:22-alpine AS production
 
 # Usamos imagen oficial de ffmpeg + Debian slim
-FROM jrottenberg/ffmpeg:6.0-slim AS production
 
 WORKDIR /app
 
 # Dependencias runtime
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    nodejs npm bash openssl ca-certificates libc6-compat \
-    && apt-get upgrade -y \
-    && rm -rf /var/lib/apt/lists/*
-
+RUN apk add --no-cache bash openssl ca-certificates libc6-compat
 
 # pnpm
 RUN npm install -g pnpm@latest
@@ -60,8 +55,8 @@ COPY --from=build /app/dist ./dist
 
 COPY --from=build /app/prisma.config.ts ./prisma.config.ts
 
-# Aseguramos que ffmpeg esté en el PATH de Node
-#ENV PATH="/usr/bin:${PATH}"
+# Copiamos el WASM pre-cargado desde build
+COPY --from=build /root/.ffmpeg-core ./node_modules/@ffmpeg/ffmpeg/core
 
 ENV NODE_ENV=production
 EXPOSE 3000
