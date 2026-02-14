@@ -61,7 +61,7 @@ COPY --from=build /app/dist ./dist
 COPY --from=build /app/prisma.config.ts ./prisma.config.ts
 
 # Aseguramos que ffmpeg esté en el PATH de Node
-ENV PATH="/usr/bin:${PATH}"
+#ENV PATH="/usr/bin:${PATH}"
 
 ENV NODE_ENV=production
 EXPOSE 3000
