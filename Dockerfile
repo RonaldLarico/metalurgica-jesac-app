@@ -33,15 +33,16 @@ RUN pnpm prisma generate
 # -------------------------
 # Etapa de producción
 # -------------------------
-FROM node:22-bullseye AS production
+#FROM node:22-bullseye AS production
+
+# Usamos imagen oficial de ffmpeg + Debian slim
+FROM jrottenberg/ffmpeg:6.0-slim AS production
 
 WORKDIR /app
 
 # Dependencias runtime
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    ffmpeg \
-    libavcodec-extra \
-    bash openssl ca-certificates libc6-compat \
+    nodejs npm bash openssl ca-certificates libc6-compat \
     && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/*
 
