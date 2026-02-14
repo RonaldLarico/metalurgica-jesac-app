@@ -1,14 +1,21 @@
 # -------------------------
 # Etapa de build
 # -------------------------
-FROM node:22-slim AS build
+FROM node:22-alpine AS build
 
 WORKDIR /app
 
 # Dependencias nativas necesarias
-RUN apt-get update && apt-get install -y \
-    python3 g++ make git bash openssl \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache \
+    python3 \
+    g++ \
+    make \
+    git \
+    bash \
+    libc6-compat \
+    ca-certificates \
+    openssl \
+    && apk upgrade --no-cache
 
 # pnpm
 RUN npm install -g pnpm@latest
@@ -32,14 +39,17 @@ RUN pnpm prisma generate
 # -------------------------
 # Etapa de producción
 # -------------------------
-FROM node:22-slim AS production
+FROM node:22-alpine AS production
 
 WORKDIR /app
 
 # Dependencias runtime
-RUN apt-get update && apt-get install -y \
-    openssl bash \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache \
+    bash \
+    openssl \
+    ffmpeg \
+    libc6-compat \
+    ca-certificates
 
 # pnpm
 RUN npm install -g pnpm@latest
@@ -59,4 +69,4 @@ EXPOSE 3000
 
 # AGREGADO: Prisma migrate deploy antes de arrancar el server
 #CMD ["sh", "-c", "pnpm prisma migrate deploy && node dist/server/entry.mjs"]
-CMD ["node", "dist/server/entry.mjs"]
+CMD ["node","dist/server/entry.mjs"]
