@@ -13,7 +13,7 @@ export default function ServiceBadgeButtons() {
   ];
 
   return (
-    <div className="w-full max-w-6xl mx-auto mt-2">
+    <div className="w-full max-w-5xl mx-auto mt-2">
       {/* Barra horizontal tipo badge */}
       <div className="flex gap-2 bg-gray-100 rounded-full p-1 shadow-md overflow-hidden">
         {buttons.map((btn, idx) => (

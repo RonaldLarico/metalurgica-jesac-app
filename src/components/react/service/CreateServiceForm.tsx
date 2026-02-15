@@ -84,7 +84,7 @@ export default function CreateServiceForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-3xl mx-auto space-y-6 p-6 rounded-2xl bg-white dark:bg-gray-800 shadow-lg"
+      className="max-w-5xl mx-auto space-y-6 p-6 rounded-2xl bg-white dark:bg-gray-800 shadow-lg"
     >
       <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
         Crear Servicio

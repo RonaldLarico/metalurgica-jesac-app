@@ -2,13 +2,8 @@ import type { APIRoute } from "astro";
 import fs from "fs";
 import path from "path";
 import sharp from "sharp";
-import FFmpeg from '@ffmpeg/ffmpeg';
 import { prisma } from "../../../../lib/db.server";
 import { ensureMediaDir, MEDIA_DIRS } from "../../../lib/mediaPaths";
-
-//ffmpeg.setFfmpegPath("/usr/bin/ffmpeg");
-const { createFFmpeg, fetchFile } = FFmpeg;
-const ffmpeg = createFFmpeg({ log: true });
 
 export const POST: APIRoute = async ({ request, cookies }) => {
   const type = "gallery";
@@ -34,7 +29,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     const gifExts = [".gif"];
 
     const uploadDir = MEDIA_DIRS[type];
-    if (!ffmpeg.isLoaded()) await ffmpeg.load();
+
 
     for (const item of items) {
       if (!(item instanceof File)) continue;
@@ -81,43 +76,13 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         });
         responseUrls.push(publicUrl);
       } else if (videoExts.includes(extname) || gifExts.includes(extname)) {
-        // Video/GIF: FFmpeg WASM
-        const tempInputName = `temp-${Date.now()}-${sanitizedOriginalName}${extname}`;
-        const tempInputPath = path.join(uploadDir, tempInputName);
-        fs.writeFileSync(tempInputPath, originalBuffer);
+        fileName = `${Date.now()}-${sanitizedOriginalName}${extname}`;
+        const filePath = path.join(uploadDir, fileName);
 
-        const tempOutputName = `${Date.now()}-${sanitizedOriginalName}.webm`;
-        const outputPath = path.join(uploadDir, tempOutputName);
+        fs.writeFileSync(filePath, originalBuffer);
 
-        ffmpeg.FS("writeFile", tempInputName, await fetchFile(tempInputPath));
-
-        await ffmpeg.run(
-          "-i",
-          tempInputName,
-          "-c:v",
-          "libvpx-vp9",
-          "-c:a",
-          "libopus",
-          "-b:v",
-          "0",
-          "-crf",
-          "32",
-          "-vf",
-          "scale=1280:-1",
-          tempOutputName,
-        );
-
-        const data = ffmpeg.FS("readFile", tempOutputName);
-        fs.writeFileSync(outputPath, Buffer.from(data));
-
-        // Limpiar archivos temporales de WASM
-        ffmpeg.FS("unlink", tempInputName);
-        ffmpeg.FS("unlink", tempOutputName);
-        fs.unlinkSync(tempInputPath);
-
-        fileName = tempOutputName;
         publicUrl = `/api/media/${type}/${fileName}`;
-        stats = fs.statSync(outputPath);
+        stats = fs.statSync(filePath);
 
         savedFiles.push({
           url: publicUrl,
@@ -125,7 +90,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
           size: stats.size,
           width: null,
           height: null,
-          format: extname.replace(".", ""),
+          format: ext,
           userId: Number(userId),
         });
 
