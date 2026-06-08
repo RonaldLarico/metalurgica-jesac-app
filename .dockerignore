@@ -1,4 +1,5 @@
 node_modules
+prisma/migrations
 .cache
 .tmp
 npm-debug.log*
