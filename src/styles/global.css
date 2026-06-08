@@ -8,6 +8,8 @@
     /* 🎨 Brand */
     --color-primary: #057EC4;
     --color-secondary: #CCD33B;
+    --color-chart: var(--color-primary);
+    --color-linear: var(--color-secondary);
 
     /* 🌞 Light mode */
     --overlay-top: #057EC433;
@@ -17,6 +19,14 @@
     --card-border: #057EC433;
 
     --login-bg: #f3f6f9;
+    --background-bg: #ffffff;
+    --circle-blue: #057EC499;
+    --circle-green: #CCD33B99;
+
+    --circle-main: var(--circle-blue);
+    --circle-mainly: var(--circle-green);
+
+    --grid-opacity: 28%;
   }
 
   .dark {
@@ -24,82 +34,156 @@
     /* --overlay-top: #000000E6;
     --overlay-bottom: #000000E6; */
     --login-bg: #0b1e2d;
+    --background-bg: #061d2e;
+    --color-chart: var(--color-secondary);
+    --color-linear: var(--color-primary);
     /* Cards */
     --card-border: #38BDF826;
+    --circle-blue: #0c80c499;
+    --circle-green: #CCD33B66;
+
+    --circle-main: var(--circle-green);
+    --circle-mainly: var(--circle-blue);
+
+    --grid-opacity: 58%;
   }
 }
 
 /* Fondo del MainLayout */
 .bg-landing {
   position: relative;
-  background-color: var(--login-bg);
+  background-color: var(--background-bg);
   overflow-x: hidden;
 }
 
 .bg-landing::before {
   content: "";
   position: absolute;
-  inset: 0%;
+  inset: 0;
   z-index: 0;
   pointer-events: none;
-  transform-origin: center;
 
   background:
-    /* Núcleo principal (azul) */
+
+    /* superior */
     radial-gradient(
-      circle at 25% 30%,
-      var(--overlay-top) 0%,
-      transparent 32%
+      ellipse 900px 600px at 25% 3%,
+      var(--circle-main),
+      transparent 70%
     ),
 
-    /* Núcleo secundario (verde) */
     radial-gradient(
-      circle at 70% 25%,
-      var(--overlay-bottom) 0%,
-      transparent 30%
+      ellipse 800px 600px at 65% 16%,
+      var(--circle-mainly),
+      transparent 70%
     ),
 
-    /* Planeta inferior azul */
+    /* zona superior media */
     radial-gradient(
-      circle at 45% 70%,
-      var(--overlay-top) 0%,
-      transparent 28%
+      ellipse 800px 900px at 50% 30%,
+      var(--circle-main),
+      transparent 72%
     ),
 
-    /* Punto orbital pequeño verde */
     radial-gradient(
-      circle at 82% 68%,
-      var(--overlay-bottom) 0%,
-      transparent 22%
+      ellipse 850px 620px at 70% 40%,
+      var(--circle-mainly),
+      transparent 70%
+    ),
+
+    /* centro */
+    radial-gradient(
+      ellipse 900px 550px at 60% 50%,
+      var(--circle-main),
+      transparent 75%
+    ),
+
+    radial-gradient(
+      ellipse 650px 420px at 25% 60%,
+      var(--circle-mainly),
+      transparent 72%
+    ),
+
+    radial-gradient(
+      ellipse 750px 480px at 55% 67%,
+      var(--circle-main),
+      transparent 72%
+    ),
+
+    /* zona inferior */
+    radial-gradient(
+      ellipse 800px 500px at 30% 80%,
+      var(--circle-main),
+      transparent 72%
+    ),
+
+    radial-gradient(
+      ellipse 650px 420px at 75% 85%,
+      var(--circle-mainly),
+      transparent 70%
+    ),
+
+    radial-gradient(
+      ellipse 700px 450px at 15% 92%,
+      var(--circle-main),
+      transparent 70%
+    ),
+
+    radial-gradient(
+      ellipse 750px 480px at 85% 98%,
+      var(--circle-mainly),
+      transparent 72%
     );
 }
 
 /* MODO OSCURO */
 .dark .bg-landing::before {
-  background:
-    radial-gradient(
-      circle at 25% 30%,
-      color-mix(in srgb, var(--overlay-top) 65%, transparent) 0%,
-      transparent 34%
+  filter: blur(30px);
+  opacity: 1;
+}
+
+.bg-landing::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background-image:
+
+    repeating-linear-gradient(
+      135deg,
+      transparent 0px,
+      transparent 90px,
+      color-mix(in srgb, var(--color-chart) var(--grid-opacity), transparent) 92px
     ),
 
-    radial-gradient(
-      circle at 70% 25%,
-      color-mix(in srgb, var(--overlay-bottom) 60%, transparent) 0%,
-      transparent 32%
-    ),
-
-    radial-gradient(
-      circle at 45% 70%,
-      color-mix(in srgb, var(--overlay-top) 55%, transparent) 0%,
-      transparent 30%
-    ),
-
-    radial-gradient(
-      circle at 82% 68%,
-      color-mix(in srgb, var(--overlay-bottom) 50%, transparent) 0%,
-      transparent 24%
+    repeating-linear-gradient(
+      45deg,
+      transparent 0px,
+      transparent 90px,
+      color-mix(in srgb, var(--color-chart) var(--grid-opacity), transparent) 92px
     );
+
+  opacity: 0.40;
+
+  /* animation: gridMove 18s linear infinite; */
+}
+
+@keyframes gridMove {
+  0% {
+    background-position: 0px 0px, 0px 0px;
+  }
+  50% {
+    background-position: 120px 60px, -120px -60px;
+  }
+  100% {
+    background-position: 0px 0px, 0px 0px;
+  }
+}
+
+.dark .bg-landing::after {
+  opacity: 0.18;
 }
 
 
@@ -228,3 +312,155 @@ dialog.closing {
   color: var(--color-primary);
 }
 
+
+.phone-input:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 2px var(--color-primary) !important;
+}
+
+/* CONTENEDOR */
+.phone-container {
+  width: 100%;
+}
+
+/* INPUT */
+.phone-input {
+  width: 100% !important;
+  height: 50px !important;
+  border-radius: 0.5rem !important;
+  border: 1px solid #cbd5e1 !important;
+  padding-left: 52px !important;
+  background: transparent !important;
+  color: #1e293b !important;
+}
+
+/* BOTON BANDERA */
+.phone-flag {
+  border-radius: 0.5rem 0 0 0.5rem !important;
+  border: 1px solid #cbd5e1 !important;
+  background: transparent !important;
+}
+
+/* HOVER */
+/* .phone-flag:hover {
+  background: #f1f5f9 !important;
+} */
+
+/* DARK MODE */
+.dark .phone-input {
+  border: 1px solid #475569 !important;
+  color: #f1f5f9 !important;
+  background: transparent !important;
+}
+
+.dark .phone-flag {
+  border: 1px solid #475569 !important;
+  background: transparent !important;
+}
+
+.dark .phone-flag:hover {
+  background: #1e293b !important;
+}
+
+/* DROPDOWN */
+.react-tel-input .country-list {
+  border-radius: 0.5rem;
+  scrollbar-color: var(--color-primary) transparent;
+}
+
+.dark .react-tel-input .country-list {
+  background: #0f172a;
+  color: #f1f5f9;
+  scrollbar-color: var(--color-secondary) transparent;
+}
+
+.dark .react-tel-input .country:hover {
+  background: #1e293b !important;
+}
+
+
+/* HOVER BANDERA (botón que abre la lista) */
+.react-tel-input .selected-flag:hover {
+  background-color: #f1f5f9 !important; /* claro */
+}
+
+/* CUANDO EL DROPDOWN ESTA ABIERTO */
+.react-tel-input .selected-flag.open {
+  background-color: #e2e8f0 !important;
+}
+
+/* DARK MODE */
+.dark .react-tel-input .selected-flag:hover {
+  background-color: #1e293b !important;
+}
+
+.dark .react-tel-input .selected-flag.open {
+  background-color: #334155 !important;
+}
+
+
+/* PAIS SELECCIONADO */
+.react-tel-input .country-list .country.highlight {
+  background-color: #e2e8f0 !important; /* modo claro */
+  color: #0f172a;
+}
+
+/* HOVER normal (no cambiar lo demás) */
+.react-tel-input .country-list .country:hover {
+  background-color: #afd0f3 !important;
+}
+.dark .react-tel-input .country-list .country:hover {
+  background-color: #054d9b99 !important;
+}
+
+/* DARK MODE */
+.dark .react-tel-input .country-list .country.highlight {
+  background-color: #334155 !important;
+  color: #f1f5f9;
+}
+
+/* CONTENEDOR DEL SEARCH */
+.react-tel-input .country-list .search {
+  background: white;
+}
+
+/* CONTENEDOR DEL SEARCH */
+.react-tel-input .country-list .search {
+  padding: 10px;
+  background: white;
+}
+
+.dark .react-tel-input .country-list .search {
+  background: #0f172a;
+}
+
+/* INPUT SEARCH */
+.react-tel-input .search-box {
+  height: 40px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+
+  background: white;
+  color: #334155;
+
+  outline: none;
+}
+
+/* FOCUS */
+.react-tel-input .search-box:focus {
+  border: 1px solid var(--color-primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 25%, transparent);
+}
+
+/* DARK MODE */
+.dark .react-tel-input .search-box {
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid #475569;
+}
+
+.dark .react-tel-input .search-box:focus {
+  border: 1px solid var(--color-secondary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-secondary) 25%, transparent);
+}

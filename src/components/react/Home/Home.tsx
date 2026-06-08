@@ -135,15 +135,15 @@ export default function Hero() {
         </div>
         <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-0 pointer-events-none">
           <svg
-            className="relative block w-full h-24"
+            className="relative block w-full h-32"
             xmlns="http://www.w3.org/2000/svg"
             preserveAspectRatio="none"
             viewBox="0 0 1200 120"
           >
             <defs>
               <linearGradient id="waveGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#057ec4" stopOpacity="0.5" />
-                <stop offset="100%" stopColor="#057ec4" stopOpacity="0.001" />
+                <stop offset="0%" stopColor="var(--color-linear)" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="var(--color-linear)" stopOpacity="0.001" />
               </linearGradient>
             </defs>
             <path

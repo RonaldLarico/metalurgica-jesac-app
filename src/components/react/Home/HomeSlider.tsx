@@ -49,8 +49,7 @@ export default function HomeSlider() {
         <div
           className="
             pointer-events-none absolute left-0 top-0 z-10 h-full w-4
-            bg-linear-to-r from-[#fafafa] to-transparent
-            dark:from-[#102525]
+            bg-linear-to-r from-(--background-bg) to-transparent
           "
         />
 
@@ -58,8 +57,7 @@ export default function HomeSlider() {
         <div
           className="
             pointer-events-none absolute -right-px top-0 z-10 h-full w-5
-            bg-linear-to-l from-[#fafafa] to-transparent
-            dark:from-[#102525]
+            bg-linear-to-l from-(--background-bg) to-transparent
           "
         />
 
@@ -117,8 +115,7 @@ export default function HomeSlider() {
         <div
           className="
             pointer-events-none absolute top-0 left-0 z-10 h-8 w-full
-            bg-linear-to-b from-[#fafafa] to-transparent
-            dark:from-[#102525]
+            bg-linear-to-b from-(--background-bg) to-transparent
           "
         />
 
@@ -126,8 +123,7 @@ export default function HomeSlider() {
         <div
           className="
             pointer-events-none absolute bottom-0 left-0 z-10 h-8 w-full
-            bg-linear-to-t from-[#fafafa] to-transparent
-            dark:from-[#102525]
+            bg-linear-to-t from-(--background-bg) to-transparent
           "
         />
 

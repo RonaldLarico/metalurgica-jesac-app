@@ -1,7 +1,12 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { homeHeroData } from "../../../constants/home.data";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 export default function ContactSection() {
+  const [phone, setPhone] = useState("");
+
   return (
     <section className="py-28">
       <div className="max-w-6xl mx-auto px-4 space-y-16">
@@ -144,25 +149,25 @@ export default function ContactSection() {
 
           {/* FORMULARIO */}
           <form className="space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div>
-                <label className="block mb-2 text-sm font-medium text-slate-700 dark:text-slate-300">
-                  Nombre
-                </label>
-                <input
-                  type="text"
-                  placeholder="Nombre completo"
-                  className="
-                    w-full px-4 py-3
-                    rounded-lg
-                    bg-transparent
-                    border border-slate-300 dark:border-slate-600
-                    focus:outline-none focus:ring-2
-                    focus:ring-(--color-primary)
-                    text-slate-800 dark:text-slate-100
+            <div>
+              <label className="block mb-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                Nombre
+              </label>
+              <input
+                type="text"
+                placeholder="Nombre completo"
+                className="
+                  w-full px-4 py-3
+                  rounded-lg
+                  bg-transparent
+                  border border-slate-300 dark:border-slate-600
+                  focus:outline-none focus:ring-2
+                  focus:ring-(--color-primary)
+                  text-slate-800 dark:text-slate-100
                   "
-                />
-              </div>
+              />
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block mb-2 text-sm font-medium text-slate-700 dark:text-slate-300">
                   Email
@@ -179,6 +184,22 @@ export default function ContactSection() {
                     focus:ring-(--color-primary)
                     text-slate-800 dark:text-slate-100
                   "
+                />
+              </div>
+              <div>
+                <label className="block mb-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                  Teléfono
+                </label>
+
+                <PhoneInput
+                  country="pe"
+                  value={phone}
+                  onChange={(value) => setPhone(value)}
+                  enableSearch={true}
+                  searchPlaceholder="Ingrese un país..."
+                  inputClass="phone-input"
+                  buttonClass="phone-flag"
+                  containerClass="phone-container"
                 />
               </div>
             </div>
